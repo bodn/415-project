@@ -63,7 +63,8 @@ prof_names = ['Bobby Jean', 'Claire Baker', 'Harold Beaumont', 'Katie Smith', 'B
 section_numbers = [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245]
 room_ids = [101, 102, 103, 201, 202, 203] 
 week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-times = ['8:30am-9:50am', '10:00am-11:20am', '11:30am-12:50pm', '1:00pm-2:20pm', '2:30pm-3:50pm', '4:00pm-5:20pm']
+times = ['8:30am-9:50am', '10:00am-11:20am', '11:30am-12:50pm', '1:00pm-2:20pm', '2:30pm-3:50pm', '4:00pm-5:20pm', '5:30pm-6:50pm', '7:00pm-9:50pm']
+course_names = ['COMP1050', 'COMP2080', 'COMP2260', 'CHEM3470', 'CHEM3801', 'CHEM4540', 'BUSS4540', 'BUSS2500', 'BUSS1000', 'ENGI4540', 'ENGI3540', 'ENGI1000']
 
 def rand_num(n):
 	range_start = 10**(n-1)
@@ -94,7 +95,7 @@ def gen_students():
 		index = rand_num_range(0, len(dep_names) - 1)
 		output += '\'' + dep_names[index] + '\','
 		output += str(gen_gpa()) + ','
-		output += '\'' + dep_id[index] + '\')\n'
+		output += '\'' + dep_id[index] + '\');\n'
 		f.write(output)
 	
 	f.close()
@@ -109,13 +110,14 @@ def gen_section_records():
 		output = 'insert into section_records values(01,'
 		sec = section_numbers[rand_num_range(0, len(section_numbers) - 1)]
 		output += '\'' + str(sec) + '\','
-		output += '\'' + 'COURSE_NAME' +'\','
+		output += '\'' + course_names[rand_num_range(0, len(course_names) - 1)] +'\','
 		output += str(prof_id[rand_num_range(0, len(prof_id) - 1)]) + ','
 		output += str(room_ids[rand_num_range(0, len(room_ids) - 1)]) + ','
 		output += '\'' + week[rand_num_range(0, len(week) - 1)] + '\','
 		
 		time_slot = times[rand_num_range(0, len(times) - 1)].split('-')
-		output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\')\n'
+		output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\');\n'
+		# print(output)
 		f.write(output)
 
 	f.close()
@@ -138,7 +140,7 @@ def gen_student_records():
 			output += str(grade) + ','
 			output += '\'Pass\',' if grade >= 50 else '\'Fail\','
 			output += '\'2017\','
-			output += '\'' + semesters[rand_num_range(0, len(semesters) - 1)] + '\')\n'
+			output += '\'' + semesters[rand_num_range(0, len(semesters) - 1)] + '\');\n'
 			f.write(output)
 
 	f.close()
