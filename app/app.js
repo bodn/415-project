@@ -16,7 +16,7 @@ var connection = mysql.createConnection({
   user: 'app',
   port: 3306,
   password: 'Password123',
-  database: 'school_system',
+  database: 'student_info',
 
 })
 connection.connect((err) => {
