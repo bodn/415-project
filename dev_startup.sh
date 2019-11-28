@@ -7,9 +7,19 @@ echo -e "${GREEN}Setting up enviornment:${NOCOLOR}"
 # Gather npm dependencies
 if [ -d "./node_modules" ] 
 then
-    echo "Dependencies already installed..." 
+    echo "Application dependencies already installed..." 
 else
     echo -e "${RED}node_modules not found...${NOCOLOR}"
     echo -e "Installing dependencies..."
     npm install
 fi
+cd app
+# Gather npm dependencies
+if [ -d "./node_modules" ] 
+then
+    echo "Server dependencies already installed..." 
+else
+    echo -e "${RED}node_modules not found...${NOCOLOR}"
+    echo -e "Installing dependencies..."
+fi
+npm start
