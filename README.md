@@ -8,10 +8,17 @@ Hello and welcome to our project for COMP-4150 where we have built a Student Inf
 If you are having any difficulties running our project locally, Please [email us](mailto:bodna111@uwindsor.ca;joseph14@uwindsor.ca;sarsonk@uwindsor.ca?subject=COMP-4150%20Setup)
 
 # Software used
-- Oracle Database [**link**](https://www.oracle.com/database/technologies/oracle-database-software-downloads.html)
+- MySQL Database [**link**](https://dev.mysql.com/downloads/mysql/)
+- MySQL Workbench [**link**](https://dev.mysql.com/downloads/mysql/)
 - Node.js [**link**](https://nodejs.org/en/)
 
 # Setup
+## Database Setup
+1. Navigate to the MySQL link and download the **MySQL Installer**
+2. Open the installer and select "Add.."
+3. Under *MySQL Servers* add the latest version to be installed
+4. Under *Applications* add MySQL Workbench
+
 We hoped to eliminate any confusion when setting up the environment and have reduced the process to a simple bash script. After installing the required software and cloning the repository. Please open your terminal in the project folder and run the following bash script:
 ```bash
 ./dev_startup.sh

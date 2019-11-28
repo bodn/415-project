@@ -3,30 +3,28 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mysql = require('mysql');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var db = require('./bin/database');
-var oracleDb= require('oracledb');
+
 var app = express();
 
 // init DB connection
-// db.initConnection();
-console.log('Creating a pool....')
-oracleDb.createPool({
-  user: "SYS",
-  password: "admin",
-  connectString: "localhost:1521/orcl",
-  privilege: oracleDb.SYSDBA,
-},(err, conn) => {
-  if(err) {
-    console.error(err)
-  }
-  else {
-    console.log('Pool Created!')
-  }
-});
+var connection = mysql.createConnection({
+  host:'localhost',
+  user: 'app',
+  port: 3306,
+  password: 'Password123',
+  database: 'school_system',
 
+})
+connection.connect((err) => {
+  if(err)
+    console.log(err);
+  else
+    console.log('Connected!!');
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
