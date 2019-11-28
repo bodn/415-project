@@ -1,55 +1,64 @@
--- 1
+--1
+--Select all of the courses that a certain student is taking
+select c.name from course c
+join sectrion_records ser on ser.course_id = C.course_id
+join student_records sr on sr.section_rec = ser.section_rec
+join student s on s.student_id = sr.student_id where s.student_id = 100000001;
 
-select the courses that a certain student is taking
-	select c.name from course c
-	join sectrion_records ser on ser.course_id = C.course_id
-	join student_records sr on sr.section_rec = ser.section_rec
-	join student s on s.student_id = sr.student_id where s.student_id = 100000001;
-
--- 2
-
+--2
+--Select all of the courses that a certain professor is teaching
 select c.course_name from course c, professor p, sectrion_records s where
 c.course_id = s.course_id and p.professor_id = s.professor_id and
 p.first_name = 'BOBBY';
 
--- 3
-
+--3
+--Select all of the courses where a student gets an A
 select c.course_name from course c
 join sectrion_records se on se.course_id = c.course_id
 join student_records sr on sr.section_rec = se.section_rec
 join student s on s.student_id = sr.student_id
-where student_id = 100000002;
+where student_id = 100000002 and sr.grade >= 80;
 
--- 4 
-
+--4 
+--Select all students taking a specific course
 select s.student_id, s.first_name, s.last_name from student s
 join student_records sr on sr.student_id = s.student_id
 join sectrion_records se on se.section_rec = sr.section_rec
 join course c on s.course_id = se.course_id
 where c.course_id = 'COMP1050';
 
--- 5
-
+--5
+--Select the room that a course is being taught in
 select r.building, r.room_code from room r
 join sectrion_records sr on sr.room_id = r.room_id
 join course c on c.course_id = sr.course_id
 where c.course_id = 'COMP2080';
 
--- 6 
-
+--6 
+--Select all students currently taking a course with a certain professor
 select s.student_id, s.first_name, s.last_name from student s
 join student_records sr on sr.student_id = s.student_id
 join sectrion_records se on se.section_rec = sr.section_rec
 join professor p on se.professor_id = p.professor_id
 where p.professor_id = 9001;
 
--- 7 
-
+--7 
+--Select the department names of all students
 select s.first_name, s.last_name, d.department_name from Student s
 join department d on d.department_id = s.department_id;
 
--- 8 
+--8
+--Select all courses are offered by a department
+select c.course_id, c.course_name from course c
+join department d on d.department_id = c.department_id
+where d.department_id = 'COMPUTER SCIENCE';
 
+--9
+--Select all students on the honour roll
+select s.student_id, s.first_name, s.last_name from student s where s.gpa >= 80.0;
+
+--10
+--Update grades to add a 5% curve to the grades of all students in a certain section of a course
 declare
 	
 	cursor c1 is
@@ -66,8 +75,8 @@ begin
 	end loop;
 end;
 
--- 9
-
+--11
+--Delete a student from a course who voluntarily dropped it online
 declare
 	
 	CREATE OR REPLACE TRIGGER delete_student_warning
@@ -95,8 +104,8 @@ begin
 
 end;
 
--- 10
-	
+--12
+--Update a student’s major
 declare
 
 	CREATE PROCEDURE update_major(id number(9), major_name varchar2(30)) AS
@@ -109,8 +118,8 @@ begin
 	update_major(100000001, 'Business');
 end;
 
--- 11 
-
+--13
+--Update a student’s section of a course
 declare
 	
 	cursor c1 is 
@@ -128,21 +137,21 @@ begin
 
 end;
 
--- 12 
-
+--14
+--Update the professor who is teaching a course section
 declare
 
 begin
 
 	update section_records 
-	set professor_id = 
-	where course_id = 
-	and section_id =  
+	set professor_id = 9001
+	where course_id = 'COMP1050'
+	and section_id =  01
 
 end;
 
--- 13
-
+--15
+--Calculate the average of a course section
 declare
 
 	cursor c1 is
@@ -167,13 +176,3 @@ begin
 
 	close c1;
 end;
-
--- 14
-
-select c.course_id, c.course_name from course c
-join department d on d.department_id = c.department_id
-where d.department_id = ;
-
--- 15
-
-select s.student_id, s.first_name, s.last_name from student s where s.gpa >= 80.0;
