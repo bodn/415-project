@@ -1,64 +1,67 @@
+create schema student_information_system;
+
 create table room(
-	room_id number(3) not null,
-	building varchar2(30),
-	capacity number(3),
+	room_id int(3) not null,
+	room_num varchar(4),
+	building varchar(30),
+	capacity int(3),
 	primary key(room_id)
 );
 
 create table Student(
-	student_id number(9) not null,
-	first_name varchar2(20),
-	last_name varchar2(20),
-	email varchar2(30),
-	major varchar2(30),
-	gpa number(2, 1),
+	student_id int(9) not null,
+	first_name varchar(20),
+	last_name varchar(20),
+	email varchar(30),
+	major varchar(30),
+	gpa double(3, 1),
 	department_id char(2) not null,
 	primary key(student_id)
 );
 
 create table student_records(
-	record_id number(4) not null,
-	student_id number(9) not null,
+	record_id int(4) not null,
+	student_id int(9) not null,
 	section_rec char(4) not null,
-	grade number(2),
-	status varchar2(30),
-	year number(4),
+	grade int(2),
+	status varchar(30),
+	year int(4),
 	semester char(1),
 	primary key(record_id)
 );
 
 create table course(
-	course_id varchar2(8) not null,
-	course_name varchar2(30), 
-	description varchar2(100),
+	course_id varchar(8) not null,
+	course_name varchar(30), 
+	description varchar(100),
 	department_id char(2) not null,
 	primary key(course_id)
 );
 
 create table department(
 	department_id char(2) not null,
-	department_name varchar2(20),
+	department_name varchar(20),
 	primary key(department_id)
 );
 
 create table professor(
-	professor_id number(4) not null,
-	first_name varchar2(20),
-	last_name varchar2(20),
-	email varchar2(30),
+	professor_id int(4) not null,
+	first_name varchar(20),
+	last_name varchar(20),
+	email varchar(30),
 	department_id char(2) not null,
 	primary key(professor_id)
 );
 
 create table section_records(
-	section_id number(2) not null,
+	section_id int(2) not null,
 	section_rec char(4) not null,
-	course_id varchar2(8) not null,
-	professor_id number(4) not null,
-	room_id number(3) not null,
-	day_of_week varchar2(30),
-	start_time varchar2(20),
-	end_time varchar2(20),
+	course_id varchar(8) not null,
+	professor_id int(4) not null,
+	room_id int(3) not null,
+	day_of_week varchar(30),
+	start_time varchar(20),
+	end_time varchar(20),
 	primary key(section_rec)
 );
 
@@ -98,3 +101,4 @@ REFERENCES professor(professor_id);
 ALTER TABLE section_records
 ADD FOREIGN KEY(room_id) 
 REFERENCES room(room_id);
+);
