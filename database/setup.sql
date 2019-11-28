@@ -2,7 +2,7 @@
 CREATE SCHEMA student_info;
 CREATE USER 'app'@'%' IDENTIFIED WITH mysql_native_password BY 'Password123';
 GRANT ALL ON student_info.* TO 'app'@'%';
-
+USE student_info;
 -- Create the tables
 
 create table room(
