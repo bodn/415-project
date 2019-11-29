@@ -60,60 +60,67 @@ select s.student_id, s.first_name, s.last_name from student s where s.gpa >= 80.
 --10
 --Update grades to add a 5% curve to the grades of all students in a certain section of a course
 declare
-	
-	cursor c1 is
+	cursor c1 for
 	select s.student_id from student s
 	join student_records sr on sr.student_id = s.student_id
 	where sr.section_rec = '1234' for update;
+	exit_loop boolean;
+	continue handler for not found set exit_loop = true;
 
 begin
-	
-	for s1 in c1 loop
+	open c1;
+	curve_loop: loop
 		update student_records
 		set grade := grade * 1.05
 		where current of c1;
-	end loop;
+
+		if exit_loop then
+        	close c1;
+        	leave curve_loop;
+     	end if;
+	end loop curve_loop;
 end;
 
 --11
 --Delete a student from a course who voluntarily dropped it online
 declare
-	
-	CREATE OR REPLACE TRIGGER delete_student_warning
-	BEFORE DELETE ON student_records
+	create or replace trigger delete_student_warning
+	before delete on student_records
 
-	DECLARE
-	
-	BEGIN
-		-- execute query if they say yes
-	END;
+	declare
+		begin
+			-- execute query if they say yes
+		end;
 
-	cursor c1 is
+		cursor c1 for
 		select sr.record_id from student_records sr
 		join sectrion_records se on se.section_rec = sr.section_rec
 		join course c on c.course_id = se.course_id
 		where sr.student_id = 100000001 
 		and c.course_id = 'COMP1050' for update;
-
+		exit_loop boolean;
+		continue handler for not found set exit_loop = true;
 
 begin
-	
-	for c in c1 loop
+	open c1;
+	vw_loop: loop
 		delete from student_records where current of c;
-	end loop;
-
+		if exit_loop then
+        	close c1;
+        	leave vw_loop;
+     	end if;
+	end loop vw_loop;
 end;
 
 --12
 --Update a student’s major
 declare
-
-	CREATE PROCEDURE update_major(id number(9), major_name varchar2(30)) AS
-		BEGIN
+	create procedure update_major(id number(9), major_name varchar2(30))
+		begin
 			update student
 			set major = major_name
 			where student_id = id;	
-		END;
+		end;
 begin
 	update_major(100000001, 'Business');
 end;
@@ -121,7 +128,6 @@ end;
 --13
 --Update a student’s section of a course
 declare
-	
 	cursor c1 is 
 	select sr.student_id, sr.section_rec, se.section_id
 	from student_records sr
@@ -140,7 +146,6 @@ end;
 --14
 --Update the professor who is teaching a course section
 declare
-
 begin
 
 	update section_records 
@@ -153,7 +158,6 @@ end;
 --15
 --Calculate the average of a course section
 declare
-
 	cursor c1 is
 	select sr.record_id, sr.grade from student_records sr
 	join section_records se on se.section_rec = sr.section_rec
