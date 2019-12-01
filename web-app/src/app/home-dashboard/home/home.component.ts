@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/app/service/backend.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +8,14 @@ import { BackendService } from 'src/app/service/backend.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  loading$ = new BehaviorSubject(false);
+  studentData$ = new BehaviorSubject<any>([]);
   constructor(private backendService: BackendService) { }
   ngOnInit() {
+    this.loading$.next(true);
     this.backendService.getStudents().subscribe(res => {
-      console.log(res);
+      this.loading$.next(false);
+      this.studentData$.next(res.data);
     });
   }
 
