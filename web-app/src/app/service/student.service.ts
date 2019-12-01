@@ -15,4 +15,9 @@ export class StudentService {
     console.log(`[Get Students Details]${this.url}/student/details/${id}`);
     return this.http.get(`${this.url}/student/details/${id}`);
   }
+
+  getStudentCourses(id): Observable<any> {
+    console.log(`[Get Students Details]${this.url}/student/details/${id}`);
+    return this.http.get(`${this.url}/student/courses/${id}`);
+  }
 }
