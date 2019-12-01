@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class HomeComponent implements OnInit {
   loading$ = new BehaviorSubject(false);
   studentData$ = new BehaviorSubject<any>([]);
+  currentTabIndex = 0;
   constructor(private backendService: BackendService) { }
   ngOnInit() {
     this.loading$.next(true);
@@ -17,6 +18,10 @@ export class HomeComponent implements OnInit {
       this.loading$.next(false);
       this.studentData$.next(res.data);
     });
+  }
+
+  showTab(index) {
+    this.currentTabIndex = index;
   }
 
 }

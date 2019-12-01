@@ -1,10 +1,20 @@
 <mat-progress-bar *ngIf="loading$.value" mode="indeterminate"></mat-progress-bar>
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+      <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 0}" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" (click)="showTab(0)">Home</a>
+      <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 1}" data-toggle="tab" role="tab" (click)="showTab(1)">Students</a>
+      <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 1}" data-toggle="tab" role="tab" (click)="showTab(2)">Courses</a>
     </div>
   </nav>
 
-<app-student-table [dataSource$]="studentData$"></app-student-table>
+<ng-container *ngIf="currentTabIndex == 0">
+    <div class="m-4 animated animatedFadeInUp fadeInUp">
+     <h3 class="font-weight-lighter">Welcome to our Project</h3>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="currentTabIndex == 1">
+  <div class="my-4 animated animatedFadeInUp fadeInUp">
+    <app-student-table [dataSource$]="studentData$"></app-student-table>
+  </div>
+</ng-container>
