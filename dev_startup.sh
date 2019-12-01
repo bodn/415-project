@@ -13,7 +13,8 @@ else
     echo -e "Installing dependencies..."
     npm install
 fi
-cd app
+
+cd ./app
 # Gather npm dependencies
 if [ -d "./node_modules" ] 
 then
