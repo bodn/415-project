@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const student = require("../controllers/studentController");
+
 // Get ALL Students
 router.get("/", function(req, res) {
   const promise = new Promise((resolve, reject) => {
@@ -22,10 +23,10 @@ router.get("/", function(req, res) {
   })
 });
 
-// GET a SPECIFIC Student RECORD
-router.get("/details/:id", function(req, res) {
+// GET a SPECIFIC Student Courses
+router.get("/courses/:id", function(req, res) {
     const promise = new Promise((resolve, reject) => {
-        student.getStudentDetails(req.params.id, res => {
+        student.getStudentCourses(req.params.id, res => {
           if (res) {
             resolve(res);
           } else {
@@ -43,6 +44,29 @@ router.get("/details/:id", function(req, res) {
             data: val
           });
       })
+});
+
+// GET a SPECIFIC Student details
+router.get("/details/:id", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+      student.getStudentDetails(req.params.id, res => {
+        if (res) {
+          resolve(res);
+        } else {
+          reject("ERROR ON QUERY");
+        }
+      });
+    });
+    promise.catch(err => {
+        console.error('FUCK')
+    })
+    promise.then(val => {
+        res.status(200).json({
+          info: "Success!",
+          total: val.length,
+          data: val
+        });
+    })
 });
 
 module.exports = router;

@@ -11,6 +11,18 @@ exports.getAllStudents = async callback => {
 exports.getStudentDetails = async (id, callback) => {
   const connection = db.get();
   connection.query(
+    "SELECT * FROM STUDENT WHERE student_id = ?",
+    [id],
+    (err, rows, fields) => {
+      if (err) callback(null);
+      else callback(rows);
+    }
+  );
+};
+
+exports.getStudentCourses = async (id, callback) => {
+  const connection = db.get();
+  connection.query(
     // c.course_id, c.course_name, sr.year, c.start_time, c.end_time, sr.grade, sr.status
     `select c.course_id, c.course_name, sr.year, ser.start_time, ser.end_time, sr.semester, sr.grade, sr.status from course c
     join section_records ser on ser.course_id = c.course_id
