@@ -58,7 +58,7 @@
           </div>
         </div>
       </mat-expansion-panel>
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Academic Records
@@ -67,7 +67,7 @@
             Completed Course work
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="row">
+        <div class="row border-top pt-2">
           <div class="col-sm-4">
             <h3>
               {{courseDetails$.value.length}}
