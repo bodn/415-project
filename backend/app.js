@@ -21,15 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api', require('./routes'))
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get("*", (req, res) => {
-  const conn = db.get();
-  conn.query("SELECT * FROM STUDENT", (err, rows, fields) => {
-    if (err) console.error(err);
-    else
-      res.status(200).send({
-        message: "Welcome to the beginning of nothingness.",
-        rows
-      });
-  });
+  res.status(404).send({
+    info: 'This path was not mapped',
+    url: req.path
+  })
+
 });
 const port = parseInt(process.env.PORT, 10) || 3000;
 app.set("port", port);
