@@ -36,3 +36,9 @@
   animation-name: fadeInUp;
   -webkit-animation-name: fadeInUp;
 }
+
+.nav-item {
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -6,9 +6,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { StudentTableComponent } from './components/student-table/student-table.component';
 import { MatSortModule } from '@angular/material/sort';
+import { CourseTableComponent } from './components/course-table/course-table.component';
 
 @NgModule({
-  declarations: [HomeComponent, StudentTableComponent],
+  declarations: [HomeComponent, StudentTableComponent, CourseTableComponent],
   imports: [
     HomeRoutingModule,
     MatProgressBarModule,
