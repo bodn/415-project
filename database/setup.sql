@@ -37,7 +37,7 @@ create table student_records(
 
 create table course(
 	course_id varchar(8) not null,
-	course_name varchar(30), 
+	course_name varchar(50), 
 	description varchar(100),
 	department_id char(2) not null,
 	primary key(course_id)

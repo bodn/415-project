@@ -68,12 +68,12 @@ times = ['8:30am-9:50am', '10:00am-11:20am', '11:30am-12:50pm', '1:00pm-2:20pm',
 course_names = ['COMP1050', 'COMP2080', 'COMP2260', 'CHEM3470', 'CHEM3801', 'CHEM4540', 'BUSS4540', 'BUSS2500', 'BUSS1000', 'ENGI4540', 'ENGI3540', 'ENGI1000']
 
 room_insert = [
-	"INSERT INTO ROOM VALUES (101, 'ERIE HALL', 110);",
-	"INSERT INTO ROOM VALUES (102, 'ERIE HALL', 60);",
-	"INSERT INTO ROOM VALUES (103, 'ERIE HALL', 35);",
-	"INSERT INTO ROOM VALUES (201, 'ESSEX HALL', 105);",
-	"INSERT INTO ROOM VALUES (202, 'ESSEX HALL', 55);",
-	"INSERT INTO ROOM VALUES (203, 'ESSEX HALL', 30);",
+	"INSERT INTO ROOM VALUES (101, '1120', 'ERIE HALL', 110);"
+	"INSERT INTO ROOM VALUES (102, '1118', 'ERIE HALL', 60);"
+	"INSERT INTO ROOM VALUES (103, '3130', 'ERIE HALL', 35);"
+	"INSERT INTO ROOM VALUES (201, '1250', 'ESSEX HALL', 105);"
+	"INSERT INTO ROOM VALUES (202, '1230', 'ESSEX HALL', 55);"
+	"INSERT INTO ROOM VALUES (203, '1267', 'ESSEX HALL', 30);"
 ]
 
 department_insert = [
@@ -190,10 +190,12 @@ def gen_student_records():
 		for i in range(0, 3):
 			output = 'insert into student_records values('
 
-			temp = rand_num(4)
-			while temp in temp_list:
+			temp = 0
+			while True:
 				temp = rand_num(4)
-				temp_list.add(temp)
+				if temp not in temp_list:
+					break
+				temp_list.append(temp)
 
 			output += str(temp) + ','
 			output += str(student_numbers[student]) + ','
