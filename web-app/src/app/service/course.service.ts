@@ -12,7 +12,7 @@ export class CourseService {
   }
 
   getAllCourses(): Observable<any> {
-    return this.http.get(`${this.url}/courses/`);
+    return this.http.get(`${this.url}/course/`);
   }
 
 }
