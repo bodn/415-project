@@ -203,3 +203,8 @@ select se.section_rec, se.course_id, se.section_id, avg(sr.grade)
 from section_records se
 join student_records sr on se.section_rec = sr.section_rec
 group by se.section_rec, se.course_id, se.section_id;
+
+--20
+-- click on professor, get section
+select p.professor_id, p.first_name, p.last_name, se.section_rec, se.year from professor p
+join section_records se on se.professor_id = p.professor_id;
