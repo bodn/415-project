@@ -182,3 +182,24 @@ begin
 end;
 
 --16
+-- query for specific course id to get each section 
+-- for when it was offered and how many students
+select se.section_rec, c.course_id "Course ID", c.course_name "Course Name", se.section_id, p.first_name "Professor", se.year, count(sr.record_id) 'Number of Students' from course c
+join section_records se on se.course_id = c.course_id
+join student_records sr on sr.section_rec = se.section_rec
+join professor p on p.professor_id = se.professor_id
+group by se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name,se.year;
+
+--18
+--when they click on the section record get all the student that took it
+select se.section_rec, sr.grade, s.first_name, s.last_name, s.student_id, s.email
+from section_records se
+join student_records sr on sr.section_rec = se.section_rec
+join student s on s.student_id = sr.student_id;
+
+--19 
+-- average of a section
+select se.section_rec, se.course_id, se.section_id, avg(sr.grade)
+from section_records se
+join student_records sr on se.section_rec = sr.section_rec
+group by se.section_rec, se.course_id, se.section_id;
