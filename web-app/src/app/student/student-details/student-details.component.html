@@ -1,5 +1,5 @@
 <nav class="navbar navbar-accent bg-secondary text-white" style="padding: 0.25em 0.5em;">
-  <a class="nav-link" [routerLink]="['/']"> <img src="/assets/img/left-arrow.svg" width="30" height="30" class="d-inline-block align-top" alt="Go back" style="filter: invert(100%)"></a>
+  <a class="nav-link" [routerLink]="['/']" [state]="{tab:1}"> <img src="/assets/img/left-arrow.svg" width="30" height="30" class="d-inline-block align-top" alt="Go back" style="filter: invert(100%)"></a>
   <h3 class="">
       ID: <span class="font-weight-lighter">{{studentId}}</span>
   </h3>
@@ -78,7 +78,7 @@
           </div>
           <div class="col-sm-4">
             <h3>
-              {{studentDetails.gpa}}%
+              {{studentDetails?.gpa}}%
             </h3>
             <p>GPA Achieved</p>
           </div>
