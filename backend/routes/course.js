@@ -22,4 +22,46 @@ router.get("/", function(req, res) {
   })
 });
 
+// Get ALL Sections for a Course
+router.get("/:id", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+    course.getCourseById(req.params.id, res => {
+      if (res) {
+        resolve(res);
+      } else {
+        reject("ERROR ON QUERY");
+      }
+    });
+  });
+
+  promise.then(val => {
+    res.status(200).json({
+      info: "Success!",
+      total: val.length,
+      data: val
+    });
+  });
+})
+
+// Get ALL Sections for a Course
+router.get("/sections/:id", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+    course.getAllSectionsByCourseId(req.params.id, res => {
+      if (res) {
+        resolve(res);
+      } else {
+        reject("ERROR ON QUERY");
+      }
+    });
+  });
+
+  promise.then(val => {
+      res.status(200).json({
+        info: "Success!",
+        total: val.length,
+        data: val
+      });
+  })
+});
+
 module.exports = router;
