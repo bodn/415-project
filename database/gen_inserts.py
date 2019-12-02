@@ -175,6 +175,7 @@ def gen_section_records():
 		output += '\'' + course_names[rand_num_range(0, len(course_names) - 1)] +'\','
 		output += str(prof_id[rand_num_range(0, len(prof_id) - 1)]) + ','
 		output += str(room_ids[rand_num_range(0, len(room_ids) - 1)]) + ','
+		output += str(rand_num_range(2010, 2018)) + ','
 		output += '\'' + week[rand_num_range(0, len(week) - 1)] + '\','
 		
 		time_slot = times[rand_num_range(0, len(times) - 1)].split('-')

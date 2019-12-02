@@ -1,5 +1,3 @@
--- query for specific course id to get each section for when it was offered and how many students
-
 --1
 --Select all of the courses that a certain student is taking
 select c.course_name from course c
@@ -182,3 +180,5 @@ begin
 
 	close c1;
 end;
+
+--16
