@@ -66,6 +66,8 @@ room_ids = [101, 102, 103, 201, 202, 203]
 week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 times = ['8:30am-9:50am', '10:00am-11:20am', '11:30am-12:50pm', '1:00pm-2:20pm', '2:30pm-3:50pm', '4:00pm-5:20pm', '5:30pm-6:50pm', '7:00pm-9:50pm']
 course_names = ['COMP1050', 'COMP2080', 'COMP2260', 'CHEM3470', 'CHEM3801', 'CHEM4540', 'BUSS4540', 'BUSS2500', 'BUSS1000', 'ENGI4540', 'ENGI3540', 'ENGI1000']
+GPAs = []
+student_insert = []
 
 room_insert = [
 	"INSERT INTO ROOM VALUES (101, '1120', 'ERIE HALL', 110);",
@@ -107,6 +109,9 @@ course_insert = [
 	"INSERT INTO COURSE VALUES ('ENGI1000', 'ENGINEERING PRINCIPLES', 'DESCRIPTION OF ENGI1000', 'EN');"
 ]
 
+student_records_insert = []
+section_records_insert = []
+
 def insert_other_data(data):
 	f = open(file_name, 'a')
 
@@ -130,14 +135,14 @@ def gen_gpa():
 
 def gen_students():
 	# file_name = sys.argv[1]
-	f = open(file_name, 'a')
+	# f = open(file_name, 'a')
 
 	output = ''
 
 	for i in range(0, len(names)):
 		output = 'insert into student values('
-		num = str(rand_num(9))
-		student_numbers.append(num)
+		
+		num = str(student_numbers[i])
 		output += num + ','
 		name = names[i].split()
 		output += '\'' + name[0] + '\','
@@ -145,17 +150,17 @@ def gen_students():
 		output += '\'' + name[0][0] + name[1] + '@uwindsor.ca\','
 		index = rand_num_range(0, len(dep_names) - 1)
 		output += '\'' + dep_names[index] + '\','
-		output += str(gen_gpa()) + ','
-		output += '\'' + dep_id[index] + '\');\n'
-		f.write(output)
-	
-	f.write('\n')
-	f.close()
+		output += str(GPAs[i]) + ','
+		output += '\'' + dep_id[index] + '\');'
+		# f.write(output)
+		student_insert.append(output)
+	# f.write('\n')
+	# f.close()
 	return
 
 def gen_section_records():
 	# file_name = sys.argv[3]
-	f = open(file_name, 'a')
+	# f = open(file_name, 'a')
 
 	output = ''
 	for i in range(0, len(course_names)):
@@ -173,42 +178,51 @@ def gen_section_records():
 		output += '\'' + week[rand_num_range(0, len(week) - 1)] + '\','
 		
 		time_slot = times[rand_num_range(0, len(times) - 1)].split('-')
-		output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\');\n'
+		output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\');'
+		section_records_insert.append(output)
 		# print(output)
-		f.write(output)
-	f.write('\n')
-	f.close()
+		# f.write(output)
+	# f.write('\n')
+	# f.close()
 
 def gen_student_records():
 	
 	# file_name = sys.argv[2]
-	f = open(file_name, 'a')
+	# f = open(file_name, 'a')
 
 	output = ''
 	temp_list = []
+	num_records = 3
 	for student in range(0, len(names)):
-		for i in range(0, 3):
+		grade_total = 0
+		for i in range(0, num_records):
 			output = 'insert into student_records values('
 
 			temp = 0
 			while True:
 				temp = rand_num(4)
 				if temp not in temp_list:
+					temp_list.append(temp)
 					break
 				temp_list.append(temp)
 
 			output += str(temp) + ','
 			output += str(student_numbers[student]) + ','
 			grade = rand_num(2)
+			# print('grade is ' + str(grade))
+			grade_total += grade
 			section_rec = section_numbers[rand_num_range(0, len(section_numbers) - 1)]
 			output += str(section_rec) + ','
 			output += str(grade) + ','
 			output += '\'Pass\',' if grade >= 50 else '\'Fail\','
 			output += '\'2017\','
-			output += '\'' + semesters[rand_num_range(0, len(semesters) - 1)] + '\');\n'
-			f.write(output)
-	f.write('\n')
-	f.close()
+			output += '\'' + semesters[rand_num_range(0, len(semesters) - 1)] + '\');'
+			student_records_insert.append(output)
+			# f.write(output)
+		# print('GPA is ' + str(grade_total / num_records))
+		GPAs.append(round((grade_total / num_records), 2))
+	# f.write('\n')
+	# f.close()
 	return
 
 def check_args():
@@ -220,13 +234,23 @@ def check_args():
 		file_name = sys.argv[1]
 		f = open(file_name, 'w')
 		f.close()
-		insert_other_data(room_insert)
-		insert_other_data(department_insert)
-		gen_students()
-		insert_other_data(professor_insert)
-		insert_other_data(course_insert)
+
+		for i in range(0, len(names)):
+			num = str(rand_num(9))
+			student_numbers.append(num)
+
 		gen_section_records()
 		gen_student_records()
+		gen_students()
+		insert_other_data(room_insert)
+		insert_other_data(department_insert)
+		insert_other_data(student_insert)
+		# gen_students()
+		insert_other_data(professor_insert)
+		insert_other_data(course_insert)
+		insert_other_data(section_records_insert)
+		insert_other_data(student_records_insert)
+		# gen_section_records()
 
 def main():
 	check_args()
