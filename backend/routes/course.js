@@ -64,4 +64,46 @@ router.get("/sections/:id", function(req, res) {
   })
 });
 
+// Get a specific Section for a Course
+router.get("/section/:id", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+    course.getSectionById(req.params.id, res => {
+      if (res) {
+        resolve(res);
+      } else {
+        reject("ERROR ON QUERY");
+      }
+    });
+  });
+
+  promise.then(val => {
+      res.status(200).json({
+        info: "Success!",
+        total: val.length,
+        data: val
+      });
+  })
+});
+
+// Get Professor of a Section
+router.get("/section/professor/:id", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+    course.getSectionProfessor(req.params.id, res => {
+      if (res) {
+        resolve(res);
+      } else {
+        reject("ERROR ON QUERY");
+      }
+    });
+  });
+
+  promise.then(val => {
+      res.status(200).json({
+        info: "Success!",
+        total: val.length,
+        data: val
+      });
+  })
+});
+
 module.exports = router;

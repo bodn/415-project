@@ -19,7 +19,7 @@ exports.getCourseById = async (cid, callback) => {
 exports.getAllSectionsByCourseId = async (cid, callback) => {
   const connection = db.get();
   connection.query(`
-    select se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name, se.year, count(sr.record_id) 'num_students' from course c
+    select se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name, p.professor_id, se.year, count(sr.record_id) 'num_students' from course c
     join section_records se on se.course_id = c.course_id
     join student_records sr on sr.section_rec = se.section_rec
     join professor p on p.professor_id = se.professor_id
@@ -31,3 +31,26 @@ exports.getAllSectionsByCourseId = async (cid, callback) => {
   });
 };
 
+exports.getSectionById = async (sid, callback) => {
+  const connection = db.get();
+  connection.query(`
+    select se.section_rec, sr.grade, s.first_name, s.last_name, s.student_id, s.email
+    from section_records se
+    join student_records sr on sr.section_rec = se.section_rec
+    join student s on s.student_id = sr.student_id
+    where se.section_rec = ?
+    `, [sid], (err, rows, fields) => {
+    if (err) callback(null);
+    else callback(rows);
+  });
+}
+
+exports.getSectionProfessor = async (pid, callback) => {
+  const connection = db.get();
+  connection.query(`
+    select * from professor where professor_id = ?
+    `, [pid], (err, rows, fields) => {
+    if (err) callback(null);
+    else callback(rows);
+  });
+}

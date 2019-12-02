@@ -2,30 +2,29 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-course-table',
-  templateUrl: './course-table.component.html',
-  styleUrls: ['./course-table.component.scss']
+  selector: 'app-section-table',
+  templateUrl: './section-table.component.html',
+  styleUrls: ['./section-table.component.scss']
 })
-export class CourseTableComponent implements OnInit {
+export class SectionTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @Input() dataSource$: Observable<any>;
   tableDataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['course_id', 'course_name', 'semester', 'year', 'grade', 'status'];
+  displayedColumns: string[] = ['section_rec', 'student_id', 'last_name', 'first_name', 'grade'];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSource$.subscribe(val => {
       this.tableDataSource.data = val;
-      console.log(this.sort);
       this.tableDataSource.sort = this.sort;
     });
   }
 
   rowClicked(row) {
-   this.router.navigate([`/course`, row.course_id]);
+    this.router.navigate([`/student`, row.student_id]);
   }
 }

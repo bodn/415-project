@@ -10,17 +10,17 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./history-table.component.scss']
 })
 export class HistoryTableComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() dataSource$: Observable<any>;
+  selectedProf = {};
   tableDataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['section_rec', 'course_id', 'course_name', 'year', 'num_students'];
+  displayedColumns: string[] = ['section_rec', 'course_id', 'course_name', 'num_students', 'year'];
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSource$.subscribe(val => {
       this.tableDataSource.data = val;
-      console.log(this.sort);
       this.tableDataSource.sort = this.sort;
     });
   }
@@ -29,12 +29,9 @@ export class HistoryTableComponent implements OnInit {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        record: row.section_rec
-      },
-      // queryParamsHandling: 'merge',
-      // preserve the existing query params in the route
-      // skipLocationChange: true
-      // do not trigger navigation
+        record: row.section_rec,
+        pid: row.professor_id
+      }
     });
   }
 }

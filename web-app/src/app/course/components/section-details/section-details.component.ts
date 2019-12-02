@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CourseService } from 'src/app/service/course.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-section-details',
@@ -8,9 +10,27 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SectionDetailsComponent implements OnInit {
   @Input() sectionRecord;
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  @Input() professorId;
+  studentList$ = new BehaviorSubject<any>([]);
+  professorValue$ = new BehaviorSubject<any>(null);
+  sectionAvg = 0;
+  constructor(private router: Router, private route: ActivatedRoute, private courseService: CourseService) { }
 
   ngOnInit() {
+    this.courseService.getSectionById(this.sectionRecord).subscribe(resp => {
+      this.studentList$.next(resp.data);
+    });
+    this.studentList$.subscribe(list => {
+      this.sectionAvg = 0;
+      list.forEach(element => {
+        this.sectionAvg += element.grade;
+      });
+      this.sectionAvg = this.sectionAvg / list.length;
+    });
+
+    this.courseService.getSectionProfessor(this.professorId).subscribe(resp => {
+      this.professorValue$.next(resp.data[0]);
+    });
   }
 
   hideSection() {

@@ -23,4 +23,11 @@ export class CourseService {
     return this.http.get(`${this.url}/course/sections/${id}`);
   }
 
+  getSectionById(id): Observable<any> {
+    return this.http.get(`${this.url}/course/section/${id}`);
+  }
+  getSectionProfessor(id): Observable<any> {
+    return this.http.get(`${this.url}/course/section/professor/${id}`);
+  }
+
 }

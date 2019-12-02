@@ -8,11 +8,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HistoryTableComponent } from './components/history-table/history-table.component';
 import { SectionDetailsComponent } from './components/section-details/section-details.component';
+import { SectionTableComponent } from './components/section-table/section-table.component';
 
 
 
 @NgModule({
-  declarations: [CourseDetailsComponent, HistoryTableComponent, SectionDetailsComponent],
+  declarations: [CourseDetailsComponent, HistoryTableComponent, SectionDetailsComponent, SectionTableComponent],
   imports: [
     CourseRoutingModule,
     MatProgressBarModule,

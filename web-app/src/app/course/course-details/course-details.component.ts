@@ -11,7 +11,10 @@ import { CourseService } from 'src/app/service/course.service';
 export class CourseDetailsComponent implements OnInit {
   loading$ = new BehaviorSubject(false);
   courseId: number;
+  sectionRecord = 0;
+  professorId = 0;
   courseDetails = null;
+  professorList = [];
   displaySection = new BehaviorSubject(false);
   courseTotal = 0;
   courseHistory$ = new BehaviorSubject<any>([]);
@@ -32,13 +35,19 @@ export class CourseDetailsComponent implements OnInit {
 
         this.courseService.getAllSectionsByCourse(params.id).subscribe(resp => {
           this.courseHistory$.next(resp.data);
+          const set = new Set([]);
+          this.courseHistory$.value.foreach(section => {
+            set.add(section.professor);
+          });
+          this.professorList = [...set];
         });
       }
     });
 
     this.route.queryParams.subscribe(params => {
       if (params.record) {
-        console.log(params.record);
+        this.sectionRecord = params.record;
+        this.professorId = params.pid;
         this.displaySection.next(true);
       } else {
         this.displaySection.next(false);

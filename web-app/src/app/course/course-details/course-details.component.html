@@ -40,7 +40,8 @@
               </div>
             <div class="w-100 pb-4">
               <h5>
-                Professor:
+                Professor(s):
+                <span class="font-weight-lighter text-capitalize">{{professorList}} </span>
               </h5>
             </div>
             <div class="w-100">
@@ -55,7 +56,8 @@
         </div>
       </mat-expansion-panel>
       <!-- Section Detail -->
-      <app-section-details *ngIf="displaySection.value"></app-section-details>
+      <app-section-details *ngIf="displaySection.value" [sectionRecord]="sectionRecord" [professorId]="professorId"></app-section-details>
+
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
