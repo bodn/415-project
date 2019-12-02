@@ -4,6 +4,7 @@
       <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 0}" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home" (click)="showTab(0)">Home</a>
       <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 1}" id="nav-student-tab" data-toggle="tab" role="tab" (click)="showTab(1)">Students</a>
       <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 2}" id="nav-course-tab" data-toggle="tab" role="tab" (click)="showTab(2)">Courses</a>
+      <a class="nav-item nav-link" [ngClass]="{'active': currentTabIndex == 3}" id="nav-course-tab" data-toggle="tab" role="tab" (click)="showTab(3)">Professors</a>
     </div>
   </nav>
 
@@ -24,4 +25,10 @@
     <div class="my-4 animated animatedFadeInUp fadeInUp">
       <app-course-table [dataSource$]="courseData$"></app-course-table>
     </div>
+</ng-container>
+
+<ng-container *ngIf="currentTabIndex == 3">
+  <div class="my-4 animated animatedFadeInUp fadeInUp">
+    <app-professor-table [dataSource$]="professorData$"></app-professor-table>
+  </div>
 </ng-container>

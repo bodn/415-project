@@ -7,9 +7,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { StudentTableComponent } from './components/student-table/student-table.component';
 import { MatSortModule } from '@angular/material/sort';
 import { CourseTableComponent } from './components/course-table/course-table.component';
+import { ProfessorTableComponent } from './components/professor-table/professor-table.component';
 
 @NgModule({
-  declarations: [HomeComponent, StudentTableComponent, CourseTableComponent],
+  declarations: [HomeComponent, StudentTableComponent, CourseTableComponent, ProfessorTableComponent],
   imports: [
     HomeRoutingModule,
     MatProgressBarModule,
