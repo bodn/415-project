@@ -15,4 +15,12 @@ export class CourseService {
     return this.http.get(`${this.url}/course/`);
   }
 
+  getCourseDetails(id): Observable<any> {
+    return this.http.get(`${this.url}/course/${id}`);
+  }
+
+  getAllSectionsByCourse(id): Observable<any> {
+    return this.http.get(`${this.url}/course/sections/${id}`);
+  }
+
 }

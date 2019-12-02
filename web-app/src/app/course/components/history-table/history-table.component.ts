@@ -5,15 +5,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-course-table',
-  templateUrl: './course-table.component.html',
-  styleUrls: ['./course-table.component.scss']
+  selector: 'app-history-table',
+  templateUrl: './history-table.component.html',
+  styleUrls: ['./history-table.component.scss']
 })
-export class CourseTableComponent implements OnInit {
+export class HistoryTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @Input() dataSource$: Observable<any>;
   tableDataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['course_id', 'course_name', 'description', 'department_id'];
+  displayedColumns: string[] = ['course_id', 'course_name', 'semester', 'year', 'grade', 'status'];
 
   constructor(private router: Router) { }
 
@@ -26,6 +26,6 @@ export class CourseTableComponent implements OnInit {
   }
 
   rowClicked(row) {
-   this.router.navigate([`/course`, row.course_id]);
+   this.router.navigate([`/student`, row.student_id]);
   }
 }
