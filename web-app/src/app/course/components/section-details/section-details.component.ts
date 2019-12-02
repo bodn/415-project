@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-section-details',
@@ -7,9 +8,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SectionDetailsComponent implements OnInit {
   @Input() sectionRecord;
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+  }
+
+  hideSection() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {}
+    });
   }
 
 }

@@ -54,6 +54,8 @@
           </div>
         </div>
       </mat-expansion-panel>
+      <!-- Section Detail -->
+      <app-section-details *ngIf="displaySection.value"></app-section-details>
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -64,7 +66,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="row border-top pt-2">
-          <div class="col-sm-4">
+          <div class="col-sm-4 text-center">
             <h3>
               {{courseHistory$.value.length}}
             </h3>
@@ -72,14 +74,14 @@
           </div>
           <div class="col-sm-4">
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 text-center">
             <h3>
-              <!-- {{studentDetails?.gpa}}% -->
+              {{courseTotal}}
             </h3>
             <p>Students Completed</p>
           </div>
         </div>
-        <!-- <app-course-table [dataSource$]="courseDetails$"></app-course-table>  -->
+        <app-history-table [dataSource$]="courseHistory$"></app-history-table>
 
       </mat-expansion-panel>
     </mat-accordion>

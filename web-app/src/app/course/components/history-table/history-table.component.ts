@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-history-table',
@@ -13,9 +13,9 @@ export class HistoryTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @Input() dataSource$: Observable<any>;
   tableDataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['course_id', 'course_name', 'semester', 'year', 'grade', 'status'];
+  displayedColumns: string[] = ['section_rec', 'course_id', 'course_name', 'year', 'num_students'];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSource$.subscribe(val => {
@@ -26,6 +26,15 @@ export class HistoryTableComponent implements OnInit {
   }
 
   rowClicked(row) {
-   this.router.navigate([`/student`, row.student_id]);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        record: row.section_rec
+      },
+      // queryParamsHandling: 'merge',
+      // preserve the existing query params in the route
+      // skipLocationChange: true
+      // do not trigger navigation
+    });
   }
 }
