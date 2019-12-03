@@ -54,12 +54,17 @@ names = ['Jacki Mcelyea',
 'Emogene Morain',
 'Mildred Bulli']
 
+student_number_start = 100000000
+professor_id_start = 9001
+section_rec_start = 3000
+student_records_id_start = 1000
+
 file_name = ''
 semesters = ['S', 'W', 'F']
 student_numbers = []
 dep_names = ['Computer Science', 'Chemistry', 'Business', 'Engineering']
 dep_id = ['CS', 'CH', 'BU', 'EN']
-prof_id = [9001, 9002, 9003, 9004, 9005, 9006]
+prof_id = []
 prof_names = ['Bobby Jean', 'Claire Baker', 'Harold Beaumont', 'Katie Smith', 'Brandon Brown', 'William Davis']
 section_numbers = []
 room_ids = [101, 102, 103, 201, 202, 203] 
@@ -68,6 +73,7 @@ times = ['8:30am-9:50am', '10:00am-11:20am', '11:30am-12:50pm', '1:00pm-2:20pm',
 course_names = ['COMP1050', 'COMP2080', 'COMP2260', 'CHEM3470', 'CHEM3801', 'CHEM4540', 'BUSS4540', 'BUSS2500', 'BUSS1000', 'ENGI4540', 'ENGI3540', 'ENGI1000']
 GPAs = []
 student_insert = []
+sec_dict = {}
 
 room_insert = [
 	"INSERT INTO ROOM VALUES (101, '1120', 'ERIE HALL', 110);",
@@ -134,9 +140,7 @@ def gen_gpa():
 	return round(random.uniform(50.0 , 99.0), 2)
 
 def gen_students():
-	# file_name = sys.argv[1]
-	# f = open(file_name, 'a')
-
+	
 	output = ''
 
 	for i in range(0, len(names)):
@@ -152,79 +156,86 @@ def gen_students():
 		output += '\'' + dep_names[index] + '\','
 		output += str(GPAs[i]) + ','
 		output += '\'' + dep_id[index] + '\');'
-		# f.write(output)
 		student_insert.append(output)
-	# f.write('\n')
-	# f.close()
 	return
 
 def gen_section_records():
-	# file_name = sys.argv[3]
-	# f = open(file_name, 'a')
 
 	output = ''
+	pos = 0
 	for i in range(0, len(course_names)):
-		output = 'insert into section_records values(01,'
+		year = str(rand_num_range(2010, 2019))
+		for j in range(0, 2):
+			output = 'insert into section_records values('
+			
+			output += '0' + str(j + 1) + ','
+			sec = section_numbers[pos]
+			output += '\'' + str(sec) + '\','
+			output += '\'' + course_names[i] + '\','
+			output += str(prof_id[rand_num_range(0, len(prof_id) - 1)]) + ','
+			output += str(room_ids[rand_num_range(0, len(room_ids) - 1)]) + ','
+			output += year + ','
+			output += '\'' + week[rand_num_range(0, len(week) - 1)] + '\','
+			
+			time_slot = times[rand_num_range(0, len(times) - 1)].split('-')
+			output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\');'
+			section_records_insert.append(output)
+			pos += 1
+			sec_dict[sec] = year
 		
-		sec = rand_num(4)
-		# while sec in section_numbers:
-		# 	sec = rand_num(4)
-		section_numbers.append(sec)
-
-		output += '\'' + str(sec) + '\','
-		output += '\'' + course_names[rand_num_range(0, len(course_names) - 1)] +'\','
-		output += str(prof_id[rand_num_range(0, len(prof_id) - 1)]) + ','
-		output += str(room_ids[rand_num_range(0, len(room_ids) - 1)]) + ','
-		output += str(rand_num_range(2010, 2018)) + ','
-		output += '\'' + week[rand_num_range(0, len(week) - 1)] + '\','
-		
-		time_slot = times[rand_num_range(0, len(times) - 1)].split('-')
-		output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\');'
-		section_records_insert.append(output)
-		# print(output)
-		# f.write(output)
-	# f.write('\n')
-	# f.close()
-
 def gen_student_records():
 	
-	# file_name = sys.argv[2]
-	# f = open(file_name, 'a')
+	global student_records_id_start
 
 	output = ''
-	temp_list = []
-	num_records = 3
+	num_records = 10
 	for student in range(0, len(names)):
 		grade_total = 0
+		records = []
 		for i in range(0, num_records):
 			output = 'insert into student_records values('
+			
+			output += str(student_records_id_start) + ','
+			student_records_id_start += 1
 
-			temp = 0
-			while True:
-				temp = rand_num(4)
-				if temp not in temp_list:
-					temp_list.append(temp)
-					break
-				temp_list.append(temp)
-
-			output += str(temp) + ','
 			output += str(student_numbers[student]) + ','
 			grade = rand_num(2)
-			# print('grade is ' + str(grade))
 			grade_total += grade
-			section_rec = section_numbers[rand_num_range(0, len(section_numbers) - 1)]
+
+			section_rec = 0
+			while True:
+				section_rec = section_numbers[rand_num_range(0, len(section_numbers) - 1)]
+				if section_rec not in records:
+					records.append(section_rec)
+					break;
+				records.append(section_rec)
+
 			output += str(section_rec) + ','
 			output += str(grade) + ','
 			output += '\'Pass\',' if grade >= 50 else '\'Fail\','
-			output += '\'2017\','
+			output += '\'' + sec_dict[section_rec] + '\','
 			output += '\'' + semesters[rand_num_range(0, len(semesters) - 1)] + '\');'
 			student_records_insert.append(output)
-			# f.write(output)
-		# print('GPA is ' + str(grade_total / num_records))
 		GPAs.append(round((grade_total / num_records), 2))
-	# f.write('\n')
-	# f.close()
 	return
+
+def prepare_for_inserts():
+	global student_number_start
+	global professor_id_start
+	global section_rec_start
+
+	for i in range(0, len(names)):
+		num = str(student_number_start)
+		student_number_start += 1
+		student_numbers.append(num)
+
+	for i in range(0, len(prof_names)):
+		prof_id.append(professor_id_start)
+		professor_id_start += 1
+
+	for i in range(0, len(course_names) * 2):
+		section_numbers.append(section_rec_start)
+		section_rec_start += 1
 
 def check_args():
 	if len(sys.argv) != 2:
@@ -235,10 +246,8 @@ def check_args():
 		file_name = sys.argv[1]
 		f = open(file_name, 'w')
 		f.close()
-
-		for i in range(0, len(names)):
-			num = str(rand_num(9))
-			student_numbers.append(num)
+		prepare_for_inserts()
+		
 
 		gen_section_records()
 		gen_student_records()
@@ -246,12 +255,11 @@ def check_args():
 		insert_other_data(room_insert)
 		insert_other_data(department_insert)
 		insert_other_data(student_insert)
-		# gen_students()
 		insert_other_data(professor_insert)
 		insert_other_data(course_insert)
 		insert_other_data(section_records_insert)
 		insert_other_data(student_records_insert)
-		# gen_section_records()
+	return
 
 def main():
 	check_args()

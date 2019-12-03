@@ -59,27 +59,17 @@ select s.student_id, s.first_name, s.last_name from student s where s.gpa >= 80.
 
 --10
 --Update grades to add a 5% curve to the grades of all students in a certain section of a course
-declare
-	cursor c1 for
-	select s.student_id from student s
-	join student_records sr on sr.student_id = s.student_id
-	where sr.section_rec = '1234' for update;
-	exit_loop boolean;
-	continue handler for not found set exit_loop = true;
+DELIMITER $$
+CREATE PROCEDURE applyCurve (
+    IN sec char(4)
+)
+BEGIN
+	UPDATE student_records SET grade = grade * 1.05 where
+	section_rec = sec; 
+END$$
+DELIMITER ;
 
-begin
-	open c1;
-	curve_loop: loop
-		update student_records
-		set grade := grade * 1.05
-		where current of c1;
-
-		if exit_loop then
-        	close c1;
-        	leave curve_loop;
-     	end if;
-	end loop curve_loop;
-end;
+-- enter in section-rec name
 
 --11
 --Delete a student from a course who voluntarily dropped it online
@@ -208,3 +198,133 @@ group by se.section_rec, se.course_id, se.section_id;
 -- click on professor, get section
 select p.professor_id, p.first_name, p.last_name, se.section_rec, se.year from professor p
 join section_records se on se.professor_id = p.professor_id;
+
+-- 21
+-- procedure for getting grades, used in calculateGPA,
+
+DELIMITER $$
+CREATE PROCEDURE getGrades (
+	IN id integer,
+    INOUT total integer,
+    INOUT number123 integer
+)
+BEGIN
+
+	DECLARE finished INTEGER DEFAULT 0;
+	declare tempGrade integer;
+    
+    DEClARE c1 
+        CURSOR FOR 
+            Select grade from student_records where
+            student_id = id;
+
+	DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;
+	
+    open c1;
+    
+    doLoop: LOOP
+        FETCH c1 INTO tempGrade;
+        IF finished = 1 THEN 
+            LEAVE doLoop;
+        END IF;
+        
+        SET total = total + tempGrade;
+        set number123 = number123 + 1;
+    END LOOP doLoop;
+    
+    close c1;
+    
+END$$
+DELIMITER ;
+
+set @total = 0;
+set @number123 = 0;
+CALL getGrades(952539633, @total, @number123);
+select @total, @number123;
+
+-- 22
+-- calculate gpa
+drop procedure if exists calculateGPA;
+
+DELIMITER $$
+CREATE PROCEDURE calculateGPA()
+BEGIN
+	
+    declare id integer;
+    declare total integer;
+    declare num_of_courses integer;
+    declare new_avg double;
+    
+    DECLARE finished INTEGER DEFAULT 0;
+    
+    DEClARE c1 
+        CURSOR FOR 
+		SELECT student_id FROM student;
+    
+    DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;
+    
+	open c1;
+    
+    doLoop: LOOP
+        FETCH c1 INTO id;
+        set total = 0;
+        set num_of_courses = 0;
+        set new_avg = 0.0;
+        IF finished = 1 THEN 
+            LEAVE doLoop;
+        END IF;
+		
+		call getGrades(id, total, num_of_courses);
+        set new_avg = cast(total as double) / cast(num_of_courses as double);
+        -- select cast(total as double) / cast(num_of_courses as double);
+        update student set gpa = new_avg where student_id = id;
+        -- select new_avg;
+    END LOOP doLoop;
+    
+    close c1;
+    
+END$$
+DELIMITER ;
+
+-- TRIGGER
+-- to recalculate gpa after a curve
+CREATE TRIGGER after_curve 
+    after UPDATE ON student_records
+    FOR EACH ROW 
+	CALL calculateGPA();
+
+-- 23
+-- Procedure to add a student
+drop procedure if exists addStudent;
+
+DELIMITER $$
+CREATE PROCEDURE addStudent(
+	IN first varchar(20),
+    IN last varchar(20),
+    IN major varchar(30)
+)
+BEGIN
+	
+    declare email varchar(30);
+	declare dep_code char(2);
+    declare id integer(9);
+    
+    set email = concat(concat(left(first, 1), last), '@uwindsor.ca');
+    
+    CASE major
+		WHEN 'Computer Science' THEN set dep_code = 'CS'; 
+		WHEN 'Chemistry' THEN set dep_code = 'CS';
+		WHEN 'Business' THEN set dep_code = 'CS';
+		WHEN 'Engineering' THEN set dep_code = 'CS';
+        else set dep_code = 'NA';
+	END CASE;
+    
+    set id = (select student_id from student order by student_id desc limit 1) + 1;
+	INSERT INTO STUDENT VALUES(id, first, last, email, major, 0, dep_code);
+    
+END$$
+DELIMITER ;
+
+call addStudent('Majid', 'Joseph', 'Computer Science');
