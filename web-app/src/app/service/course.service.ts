@@ -34,4 +34,8 @@ export class CourseService {
     return this.http.post(`${this.url}/course/section/remove-student`, req);
   }
 
+  addSection(req): Observable<any> {
+    return this.http.post(`${this.url}/course/section/add`, req);
+  }
+
 }

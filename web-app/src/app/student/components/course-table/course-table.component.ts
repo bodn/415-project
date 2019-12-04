@@ -37,7 +37,7 @@ export class CourseTableComponent implements OnInit {
   }
 
   getStatusColor(elem) {
-    if (elem.status === 'Pass') {
+    if (elem.status === 'PASS') {
       return 'green';
     } else if (elem.status === 'IP') {
       return '#E6C812';

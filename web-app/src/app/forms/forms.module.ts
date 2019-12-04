@@ -8,9 +8,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StudentCourseAddComponent } from './student-course-add/student-course-add.component';
 import { StudentGradeUpdateComponent } from './student-grade-update/student-grade-update.component';
 import { CourseStudentRemoveComponent } from './course-student-remove/course-student-remove.component';
+import { SectionAddComponent } from './section-add/section-add.component';
 
 @NgModule({
-  declarations: [StudentAddComponent, StudentCourseAddComponent, StudentGradeUpdateComponent, CourseStudentRemoveComponent],
+  declarations: [StudentAddComponent, StudentCourseAddComponent, StudentGradeUpdateComponent, CourseStudentRemoveComponent, SectionAddComponent],
   imports: [
     FormsRoutingModule,
     CommonModule,

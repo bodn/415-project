@@ -32,7 +32,7 @@
         <!-- Add a student to a course -->
         <div [routerLink]="['/forms/add/student-to-course']" class="col-sm-3 m-2 clickable card shadow">
           <div class="card-body">
-            <h5 class="card-title">Add Student to a Course</h5>
+            <h5 class="card-title">Enroll Student to a Course</h5>
             <h6 class="card-subtitle mb-2 text-muted">Student Management</h6>
             <p class="card-text">Add a course to an existing student's record</p>
             <a href="#" class="card-link">Add Course</a>
@@ -51,10 +51,19 @@
       <div id="manage-course" class="pt-4">
         <h3 class="font-weight-lighter">Course management</h3>
         <div class="border-top pt-4 px-4 row">
+          <!-- Add section Class List -->
+          <div [routerLink]="['/forms/add/section']" class="col-sm-3 m-2 clickable card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Create New Section</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Course Management</h6>
+              <p class="card-text">Add a new section to an offered course</p>
+              <a href="#" class="card-link">Remove Student</a>
+            </div>
+          </div>
           <!-- Update Class List -->
           <div [routerLink]="['/forms/update/section-students']" class="col-sm-3 m-2 clickable card shadow">
             <div class="card-body">
-              <h5 class="card-title">Remove Student from Section</h5>
+              <h5 class="card-title">Drop Student from Section</h5>
               <h6 class="card-subtitle mb-2 text-muted">Course Management</h6>
               <p class="card-text">Remove Student's who have withdrawn/dropped a class</p>
               <a href="#" class="card-link">Remove Student</a>

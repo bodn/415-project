@@ -4,12 +4,17 @@ import { StudentAddComponent } from './student-add/student-add.component';
 import { StudentCourseAddComponent } from './student-course-add/student-course-add.component';
 import { StudentGradeUpdateComponent } from './student-grade-update/student-grade-update.component';
 import { CourseStudentRemoveComponent } from './course-student-remove/course-student-remove.component';
+import { SectionAddComponent } from './section-add/section-add.component';
 
 
 const formsModule: Routes = [
   {
     path: 'forms/add/student',
     component: StudentAddComponent,
+  },
+  {
+    path: 'forms/add/section',
+    component: SectionAddComponent,
   },
   {
     path: 'forms/add/student-to-course',

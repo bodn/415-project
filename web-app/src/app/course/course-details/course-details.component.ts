@@ -33,13 +33,18 @@ export class CourseDetailsComponent implements OnInit {
           this.loading$.next(false);
         });
 
-        this.courseService.getAllSectionsByCourse(params.id).subscribe(resp => {
-          this.courseHistory$.next(resp.data);
+        this.courseHistory$.subscribe(val => {
+          console.log(val);
           const set = new Set([]);
-          this.courseHistory$.value.foreach(section => {
+          val.foreach(section => {
             set.add(section.professor);
           });
           this.professorList = [...set];
+        });
+
+        this.courseService.getAllSectionsByCourse(params.id).subscribe(resp => {
+          console.log(resp.data)
+          this.courseHistory$.next(resp.data);
         });
       }
     });
