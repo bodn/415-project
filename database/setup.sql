@@ -64,7 +64,7 @@ create table section_records(
 	course_id varchar(8) not null,
 	professor_id int(4) not null,
 	room_id int(3) not null,
-	year char(4),
+	year int(4),
 	semester char(1),
 	day_of_week varchar(30),
 	start_time varchar(20),

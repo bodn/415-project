@@ -250,3 +250,65 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Procedure to add a professor to a section
+DELIMITER $$
+CREATE PROCEDURE add_professor_to_section(
+    IN p_id int(4),
+    IN sec_rec char(4)
+)
+label:BEGIN
+    
+    declare day_loop varchar(30);
+    declare start_loop varchar(20);
+    
+    declare sem char(2);
+    declare year1 int(4);
+    declare day1 varchar(30);
+    declare start1 varchar(20);
+    
+    DECLARE finished INTEGER DEFAULT 0;
+    
+    DEClARE c1 
+        CURSOR FOR 
+        SELECT sr.day_of_week, sr.start_time FROM section_records sr where sr.professor_id = p_id
+        and sr.year = 2019 and sr.semester = 'F';
+    
+    DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;
+    
+    set sem = (select semester from section_records where section_rec = sec_rec);
+    set year1 = (select sr.year from section_records sr where section_rec = sec_rec);
+    set day1 = (select day_of_week from section_records where section_rec = sec_rec);
+    set start1 = (select start_time from section_records where section_rec = sec_rec);
+    
+    if sec_rec not in (select section_rec from section_records) then
+        leave label;
+    end if;
+    
+    if not(year1 = 2019 and sem = 'F') then
+        leave label;
+    end if;
+    
+    if not((select department_id from professor where professor_id = p_id) = 
+        (select department_id from course c join section_records sr on c.course_id = sr.course_id where sr.section_rec = sec_rec)) then
+        leave label;
+    end if;
+    
+    open c1;
+    doLoop: LOOP
+        fetch c1 into day_loop, start_loop;
+        if finished = 1 then
+            leave doLoop;
+        end if;
+        
+        if day_loop = day1 and start_loop = start1 then
+            leave label;
+        end if;
+        
+    END LOOP;
+    close c1;
+    
+    update section_records set professor_id = p_id where section_rec = sec_rec;
+END$$
+DELIMITER ;
+
