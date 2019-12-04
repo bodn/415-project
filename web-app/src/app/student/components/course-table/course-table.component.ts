@@ -10,12 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./course-table.component.scss']
 })
 export class CourseTableComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() dataSource$: Observable<any>;
   tableDataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['course_id', 'course_name', 'semester', 'year', 'grade', 'status'];
+  displayedColumns: string[] = [
+    'course_id',
+    'course_name',
+    'semester',
+    'year',
+    'grade',
+    'status'
+  ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.dataSource$.subscribe(val => {
@@ -26,6 +33,16 @@ export class CourseTableComponent implements OnInit {
   }
 
   rowClicked(row) {
-   this.router.navigate([`/course`, row.course_id]);
+    this.router.navigate([`/course`, row.course_id]);
+  }
+
+  getStatusColor(elem) {
+    if (elem.status === 'Pass') {
+      return 'green';
+    } else if (elem.status === 'IP') {
+      return '#E6C812';
+    } else {
+      return 'red';
+    }
   }
 }

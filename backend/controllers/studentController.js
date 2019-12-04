@@ -48,3 +48,16 @@ exports.addStudent= async (req, callback) => {
     }
   );
 }
+
+exports.addCourse = async (req, callback) => {
+  const connection = db.get();
+  console.log(req)
+  connection.query(
+    `CALL add_student_to_section(?, ?)`,
+    [req.studentId, req.sectionRec],
+    (err, rows, fields) => {
+      if (err) callback(err);
+      else callback(rows);
+    }
+  );
+}

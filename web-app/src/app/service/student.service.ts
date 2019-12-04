@@ -24,4 +24,8 @@ export class StudentService {
   addStudent(req): Observable<any> {
     return this.http.post(`${this.url}/student/add`, req);
   }
+
+  addCourse(req): Observable<any> {
+    return this.http.post(`${this.url}/student/add-to-course`, req);
+  }
 }
