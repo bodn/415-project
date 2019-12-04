@@ -14,7 +14,7 @@ export class CourseDetailsComponent implements OnInit {
   sectionRecord = 0;
   professorId = 0;
   courseDetails = null;
-  professorList = [];
+  professorList = new BehaviorSubject<any>([]);
   displaySection = new BehaviorSubject(false);
   courseTotal = 0;
   courseHistory$ = new BehaviorSubject<any>([]);
@@ -33,18 +33,13 @@ export class CourseDetailsComponent implements OnInit {
           this.loading$.next(false);
         });
 
-        this.courseHistory$.subscribe(val => {
-          console.log(val);
-          const set = new Set([]);
-          val.foreach(section => {
-            set.add(section.professor);
-          });
-          this.professorList = [...set];
-        });
-
         this.courseService.getAllSectionsByCourse(params.id).subscribe(resp => {
-          console.log(resp.data)
           this.courseHistory$.next(resp.data);
+          const set = new Set([]);
+          resp.data.forEach(c => {
+            set.add(c.last_name);
+          });
+          this.professorList.next([...set]);
         });
       }
     });
