@@ -56,7 +56,10 @@
         </div>
       </mat-expansion-panel>
       <!-- Section Detail -->
-      <app-section-details *ngIf="displaySection.value" [sectionRecord]="sectionRecord" [professorId]="professorId"></app-section-details>
+      <ng-container *ngIf="displaySection.value">
+        <app-section-details [sectionRecord]="sectionRecord" [professorId]="professorId"></app-section-details>
+      </ng-container>
+
 
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>

@@ -39,7 +39,15 @@ export class StudentCourseAddComponent implements OnInit {
 
   ngOnInit() {
     this.backendService.getStudents().subscribe(resp => {
-      this.studentList$.next(resp.data);
+      this.studentList$.next(
+        resp.data.sort((a, b) => {
+          if (a.last_name < b.last_name) {
+            return -1;
+          } else {
+            return 1;
+          }
+        })
+      );
     });
     this.courseService.getAllCourses().subscribe(resp => {
       this.courseList$.next(resp.data);

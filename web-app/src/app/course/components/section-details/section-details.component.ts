@@ -18,6 +18,7 @@ export class SectionDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.courseService.getSectionById(this.sectionRecord).subscribe(resp => {
+      console.log(resp.data);
       this.studentList$.next(resp.data);
     });
     this.studentList$.subscribe(list => {

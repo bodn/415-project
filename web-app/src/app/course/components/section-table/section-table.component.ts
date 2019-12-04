@@ -20,6 +20,7 @@ export class SectionTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource$.subscribe(val => {
       this.tableDataSource.data = val;
+      console.log(this.tableDataSource.data)
       this.tableDataSource.sort = this.sort;
     });
   }

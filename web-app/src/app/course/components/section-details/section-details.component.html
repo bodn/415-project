@@ -20,9 +20,9 @@
         </div>
         <div class="col-sm-4">
             <h4 routerLink="['/professor']">
-                {{professorValue$.value.last_name}},
+                {{professorValue$.value?.last_name}},
                 <span class="font-weight-lighter">
-                  {{professorValue$.value.first_name}}
+                  {{professorValue$.value?.first_name}}
                 </span>
             </h4>
             <p>Taught By</p>
