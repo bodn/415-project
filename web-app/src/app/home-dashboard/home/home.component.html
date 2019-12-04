@@ -15,7 +15,7 @@
 <ng-container *ngIf="currentTabIndex == 0">
   <div class="m-4 animated animatedFadeInUp fadeInUp">
     <h3 class="font-weight-lighter">Welcome to our Project</h3>
-    <h4>What would you like to do?</h4>
+    <h4 class="mb-4">What would you like to do?</h4>
     <div id="manage-student" class="py-4">
       <!-- Student Management -->
       <h3 class="font-weight-lighter">Student management</h3>
@@ -67,6 +67,15 @@
               <h6 class="card-subtitle mb-2 text-muted">Course Management</h6>
               <p class="card-text">Remove Student's who have withdrawn/dropped a class</p>
               <a href="#" class="card-link">Remove Student</a>
+            </div>
+          </div>
+          <!-- Apply Curve to a Class List -->
+          <div [routerLink]="['/forms/update/section-curve']" class="col-sm-3 m-2 clickable card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Apply a Curve to a Section</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Course Management</h6>
+              <p class="card-text">Increase overall class performance</p>
+              <a href="#" class="card-link">Apply Curve</a>
             </div>
           </div>
         </div>

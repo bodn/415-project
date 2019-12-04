@@ -96,3 +96,17 @@ exports.addSection = async (req, callback) => {
     }
   );
 };
+
+exports.applyCurveToSection = async (sid, callback) => {
+  const connection = db.get();
+  connection.query(
+    `
+    call apply_curve(?)
+    `,
+    [sid],
+    (err, rows, fields) => {
+      if (err) callback(null);
+      else callback(rows);
+    }
+  );
+};

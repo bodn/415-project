@@ -38,4 +38,12 @@ export class CourseService {
     return this.http.post(`${this.url}/course/section/add`, req);
   }
 
+  applyCurveToSection(req): Observable<any> {
+    return this.http.post(`${this.url}/course/section/curve`, req);
+  }
+
+  getSectionAverage(req): Observable<any> {
+    return this.http.post(`${this.url}/course/section/curve`, req);
+  }
+
 }

@@ -5,6 +5,7 @@ import { StudentCourseAddComponent } from './student-course-add/student-course-a
 import { StudentGradeUpdateComponent } from './student-grade-update/student-grade-update.component';
 import { CourseStudentRemoveComponent } from './course-student-remove/course-student-remove.component';
 import { SectionAddComponent } from './section-add/section-add.component';
+import { SectionCurveComponent } from './section-curve/section-curve.component';
 
 
 const formsModule: Routes = [
@@ -27,6 +28,10 @@ const formsModule: Routes = [
   {
     path: 'forms/update/section-students',
     component: CourseStudentRemoveComponent,
+  },
+  {
+    path: 'forms/update/section-curve',
+    component: SectionCurveComponent
   }
 ];
 
