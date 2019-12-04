@@ -54,3 +54,16 @@ exports.getSectionProfessor = async (pid, callback) => {
     else callback(rows);
   });
 }
+
+exports.dropStudent = async (req, callback) => {
+  const connection = db.get();
+  console.log(req)
+  connection.query(
+    `CALL drop_student_from_section(?, ?)`,
+    [req.studentId, req.secRec],
+    (err, rows, fields) => {
+      if (err) callback(err);
+      else callback(rows);
+    }
+  );
+}

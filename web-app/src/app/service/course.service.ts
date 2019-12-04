@@ -30,4 +30,8 @@ export class CourseService {
     return this.http.get(`${this.url}/course/section/professor/${id}`);
   }
 
+  dropStudentInSection(req): Observable<any> {
+    return this.http.post(`${this.url}/course/section/remove-student`, req);
+  }
+
 }

@@ -7,9 +7,10 @@ import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, M
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StudentCourseAddComponent } from './student-course-add/student-course-add.component';
 import { StudentGradeUpdateComponent } from './student-grade-update/student-grade-update.component';
+import { CourseStudentRemoveComponent } from './course-student-remove/course-student-remove.component';
 
 @NgModule({
-  declarations: [StudentAddComponent, StudentCourseAddComponent, StudentGradeUpdateComponent],
+  declarations: [StudentAddComponent, StudentCourseAddComponent, StudentGradeUpdateComponent, CourseStudentRemoveComponent],
   imports: [
     FormsRoutingModule,
     CommonModule,

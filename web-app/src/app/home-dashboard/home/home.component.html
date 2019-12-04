@@ -19,7 +19,7 @@
     <div id="manage-student" class="py-4">
       <!-- Student Management -->
       <h3 class="font-weight-lighter">Student management</h3>
-      <div class="border-top pt-4 px-4 row">
+      <div class="border-top pt-4 px-4 row pb-4">
         <!-- Create a student -->
         <div [routerLink]="['/forms/add/student']" class="col-sm-3 m-2 clickable card shadow">
           <div class="card-body">
@@ -45,6 +45,20 @@
             <h6 class="card-subtitle mb-2 text-muted">Student Management</h6>
             <p class="card-text">Change the grade a student has in a specific course</p>
             <a href="#" class="card-link">Update Grade</a>
+          </div>
+        </div>
+      </div>
+      <div id="manage-course" class="pt-4">
+        <h3 class="font-weight-lighter">Course management</h3>
+        <div class="border-top pt-4 px-4 row">
+          <!-- Update Class List -->
+          <div [routerLink]="['/forms/update/section-students']" class="col-sm-3 m-2 clickable card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Remove Student from Section</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Course Management</h6>
+              <p class="card-text">Remove Student's who have withdrawn/dropped a class</p>
+              <a href="#" class="card-link">Remove Student</a>
+            </div>
           </div>
         </div>
       </div>

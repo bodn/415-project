@@ -106,4 +106,26 @@ router.get("/section/professor/:id", function(req, res) {
   })
 });
 
+// Get Remove student from a Section
+router.post("/section/remove-student", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+    course.dropStudent(req.body, res => {
+      if (res) {
+        resolve(res);
+      } else {
+        reject("ERROR ON QUERY");
+      }
+    });
+  });
+
+  promise.then(val => {
+      res.status(200).json({
+        info: "Success!",
+        total: val.length,
+        data: val
+      });
+  })
+});
+
+
 module.exports = router;
