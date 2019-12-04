@@ -144,7 +144,7 @@ end;
 --16
 -- query for specific course id to get each section 
 -- for when it was offered and how many students
-select se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name, p.professor_id, se.semester ,se.year, count(sr.record_id) 'num_students' from course c
+select se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name, p.last_name, p.professor_id, se.semester ,se.year, count(sr.record_id) 'num_students' from course c
     join section_records se on se.course_id = c.course_id
     left join student_records sr on sr.section_rec = se.section_rec
     join professor p on p.professor_id = se.professor_id
