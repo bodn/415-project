@@ -115,36 +115,6 @@ begin
 	update_major(100000001, 'Business');
 end;
 
---13
---Update a student’s section of a course
-declare
-	cursor c1 is 
-	select sr.student_id, sr.section_rec, se.section_id
-	from student_records sr
-	join section_records se on se.section_rec = sr.section_rec for update;
-
-begin
-	
-	for c in c1 loop
-		update section_records
-		set section_id = $new_id
-		where current of c;
-	end loop;
-
-end;
-
---14
---Update the professor who is teaching a course section
-declare
-begin
-
-	update section_records 
-	set professor_id = 9001
-	where course_id = 'COMP1050'
-	and section_id =  01
-
-end;
-
 --15
 --Calculate the average of a course section
 declare
@@ -201,7 +171,6 @@ join section_records se on se.professor_id = p.professor_id;
 
 -- 21
 -- procedure for getting grades, used in calculateGPA,
-
 DELIMITER $$
 CREATE PROCEDURE getGrades (
 	IN id integer,
@@ -328,3 +297,47 @@ END$$
 DELIMITER ;
 
 call addStudent('Majid', 'Joseph', 'Computer Science');
+
+-- 24
+-- Procedure to get an average of a section
+DELIMITER $$
+CREATE PROCEDURE get_average(
+	IN sec_rec char(4),
+    INOUT total_grade integer,
+    INOUT number_of_students integer,
+    OUT average double
+)
+BEGIN
+    DECLARE finished INTEGER DEFAULT 0;
+    declare temp_grade integer;
+    
+	DEClARE c1 
+        CURSOR FOR 
+		SELECT grade FROM student_records sr where sr.section_rec = sec_rec;
+    
+    DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;    
+	
+    open c1;
+    
+    doLoop: LOOP
+		fetch c1 into temp_grade;
+        if finished = 1 then
+			leave doLoop;
+		end if;
+        -- select temp_grade;
+        set total_grade = total_grade + temp_grade;
+        set number_of_students = number_of_students + 1;
+        -- select total_grade;
+    END LOOP;
+    set average = cast(total_grade as double) / cast(number_of_students as double);
+	-- select total_grade, number_of_students;
+    
+    close c1;
+END$$
+DELIMITER ;
+
+set @total = 0;
+set @num = 0;
+call get_average('3000', @total, @num, @avg1);
+select @avg1;
