@@ -14,7 +14,7 @@ export class HistoryTableComponent implements OnInit {
   @Input() dataSource$: Observable<any>;
   selectedProf = {};
   tableDataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['section_rec', 'course_id', 'course_name', 'num_students', 'year'];
+  displayedColumns: string[] = ['section_id', 'course_id', 'course_name', 'professor_name','num_students', 'year'];
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 

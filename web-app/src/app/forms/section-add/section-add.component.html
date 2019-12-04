@@ -50,7 +50,7 @@
             <mat-label>Location</mat-label>
             <mat-select formControlName="selectRoom" class="w-100">
               <mat-option *ngFor="let room of roomList$.value" [value]="room">
-                <span class="font-weight-bold">{{room.building}}-{{room.room_num}}</span><span class="pl-4">Max
+                <span class="font-weight-bold">{{room.building}}-{{room.room_num}}</span> <span class="ml-4">Max
                   Capacity: {{room.capacity}} students</span>
               </mat-option>
             </mat-select>
