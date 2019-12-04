@@ -109,4 +109,9 @@ export class SectionAddComponent implements OnInit {
       duration: 2000
     });
   }
+
+  checkProfessor(prof) {
+    const course = this.firstFormGroup.get('selectCourse').value;
+    return prof.department_id !== course.department_id;
+  }
 }

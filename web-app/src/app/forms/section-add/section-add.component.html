@@ -32,7 +32,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Professor</mat-label>
             <mat-select formControlName="selectProfessor" class="w-100">
-              <mat-option *ngFor="let professor of professorList$.value" [value]="professor">
+              <mat-option *ngFor="let professor of professorList$.value" [value]="professor" [disabled]="checkProfessor(professor)">
                 <span class="font-weight-bold">{{professor.last_name}}</span>, {{professor.first_name}}
               </mat-option>
             </mat-select>
@@ -50,7 +50,7 @@
             <mat-label>Location</mat-label>
             <mat-select formControlName="selectRoom" class="w-100">
               <mat-option *ngFor="let room of roomList$.value" [value]="room">
-                <span class="font-weight-bold">{{room.building}}-{{room.room_num}}</span> <span class="ml-4">Max
+                <span class="font-weight-bold pr-4">{{room.building}}-{{room.room_num}}</span> <span>Max
                   Capacity: {{room.capacity}} students</span>
               </mat-option>
             </mat-select>
@@ -106,7 +106,7 @@
               class="font-weight-bold">{{thirdFormGroup.get('selectRoom').value.building}}-{{thirdFormGroup.get('selectRoom').value.room_num}}</span>
           </h5>
           <h5 class="font-weight-lighter">Meeting Time: <span
-              class="font-weight-bold">{{thirdFormGroup.get('selectDay').value}}</span> <span>{{thirdFormGroup.get('selectStart').value}} - {{thirdFormGroup.get('selectEnd').value}}</span>
+              class="font-weight-bold">{{thirdFormGroup.get('selectDay').value}}</span> <span class="pl-2">{{thirdFormGroup.get('selectStart').value}} - {{thirdFormGroup.get('selectEnd').value}}</span>
           </h5>
           <h5 class="font-weight-lighter mb-4">Max Capacity: <span
             class="font-weight-bold">{{thirdFormGroup.get('selectRoom').value.capacity}}</span> students
