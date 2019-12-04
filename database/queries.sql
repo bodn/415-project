@@ -347,5 +347,43 @@ select @avg1;
 select p.professor_id, p.first_name, p.last_name, count(sr.student_id) from professor p
 join section_records se on se.professor_id = p.professor_id
 join student_records sr on sr.section_rec = se.section_rec
-group by p.professor_id, p.first_name, p.last_name
-;
+group by p.professor_id, p.first_name, p.last_name;
+
+
+-- 26
+-- Procedure to get number of students in a department
+DELIMITER $$
+CREATE PROCEDURE get_department_count(
+	IN dep_id char(2),
+    INOUT total integer
+)
+BEGIN
+	
+    declare temp integer;
+	DECLARE finished INTEGER DEFAULT 0;
+	
+    DEClARE c1 
+        CURSOR FOR 
+        select student_id from student where department_id = dep_id;
+        
+	DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;    
+        
+	open c1;
+    
+    doLoop: LOOP
+		fetch c1 into temp;
+        if finished = 1 then
+			leave doLoop;
+		end if;
+        set total = total + 1;
+    end LOOP;
+    
+    close c1;
+    
+END$$
+DELIMITER ;
+
+set @total = 0;
+call get_department_count('CS', @total);
+select @total;
