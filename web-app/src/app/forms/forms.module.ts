@@ -10,9 +10,10 @@ import { StudentGradeUpdateComponent } from './student-grade-update/student-grad
 import { CourseStudentRemoveComponent } from './course-student-remove/course-student-remove.component';
 import { SectionAddComponent } from './section-add/section-add.component';
 import { SectionCurveComponent } from './section-curve/section-curve.component';
+import { ProfessorSectionAddComponent } from './professor-section-add/professor-section-add.component';
 
 @NgModule({
-  declarations: [StudentAddComponent, StudentCourseAddComponent, StudentGradeUpdateComponent, CourseStudentRemoveComponent, SectionAddComponent, SectionCurveComponent],
+  declarations: [StudentAddComponent, StudentCourseAddComponent, StudentGradeUpdateComponent, CourseStudentRemoveComponent, SectionAddComponent, SectionCurveComponent, ProfessorSectionAddComponent],
   imports: [
     FormsRoutingModule,
     CommonModule,

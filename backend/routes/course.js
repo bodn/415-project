@@ -170,4 +170,26 @@ router.post("/section/curve", function(req, res) {
 });
 
 
+// Add Section to a course student from a Section
+router.post("/section/professor", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+    course.addProfessorToSection(req.body, res => {
+      if (res) {
+        resolve(res);
+      } else {
+        reject("ERROR ON QUERY");
+      }
+    });
+  });
+
+  promise.then(val => {
+      res.status(200).json({
+        info: "Success!",
+        total: val.length,
+        data: val
+      });
+  })
+});
+
+
 module.exports = router;

@@ -38,6 +38,10 @@ export class CourseService {
     return this.http.post(`${this.url}/course/section/add`, req);
   }
 
+  addProfessorToSection(req): Observable<any> {
+    return this.http.post(`${this.url}/course/section/professor`, req);
+  }
+
   applyCurveToSection(req): Observable<any> {
     return this.http.post(`${this.url}/course/section/curve`, req);
   }

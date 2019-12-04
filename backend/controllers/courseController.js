@@ -25,7 +25,7 @@ exports.getAllSectionsByCourseId = async (cid, callback) => {
   console.log(cid);
   connection.query(
     `
-    select se.section_rec, c.course_id, c.course_name, se.section_id, p.last_name, p.first_name, p.professor_id, se.semester ,se.year, count(sr.record_id) 'num_students' from course c
+    select se.section_rec, c.course_id, c.course_name, c.department_id,se.section_id, p.last_name, p.first_name, p.professor_id, se.semester ,se.year, count(sr.record_id) 'num_students' from course c
     join section_records se on se.course_id = c.course_id
     left join student_records sr on sr.section_rec = se.section_rec
     join professor p on p.professor_id = se.professor_id
@@ -104,6 +104,21 @@ exports.applyCurveToSection = async (sid, callback) => {
     call apply_curve(?)
     `,
     [sid],
+    (err, rows, fields) => {
+      if (err) callback(null);
+      else callback(rows);
+    }
+  );
+};
+
+exports.addProfessorToSection = async (req, callback) => {
+  const connection = db.get();
+  console.log(req)
+  connection.query(
+    `
+    call add_professor_to_section(?, ?)
+    `,
+    [req.profId, +req.secRec],
     (err, rows, fields) => {
       if (err) callback(null);
       else callback(rows);
