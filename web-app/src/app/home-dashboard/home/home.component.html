@@ -83,6 +83,15 @@
       <div id="manage-professor" class="pt-4">
         <h3 class="font-weight-lighter">Professor Management</h3>
         <div class="border-top pt-4 px-4 row">
+          <!-- Create a student -->
+          <div [routerLink]="['/forms/add/professor']" class="col-sm-3 m-2 clickable card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Create a New Professor</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Professor Management</h6>
+              <p class="card-text">Add a new professor to our professor records</p>
+              <a href="#" class="card-link">Create</a>
+            </div>
+          </div>
           <!-- Add section Class List -->
           <div [routerLink]="['/forms/update/prof-section-add']" class="col-sm-3 m-2 clickable card shadow">
             <div class="card-body">

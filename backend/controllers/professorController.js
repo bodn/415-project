@@ -22,3 +22,16 @@ exports.getCourses = async (id, callback) => {
     }
   );
 };
+
+exports.addProfessor= async (req, callback) => {
+  const connection = db.get();
+  console.log(req);
+  connection.query(
+    `CALL add_professor(?, ?, ?)`,
+    [req.first, req.last, req.major],
+    (err, rows, fields) => {
+      if (err) callback(err);
+      else callback(rows);
+    }
+  );
+}

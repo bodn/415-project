@@ -16,4 +16,8 @@ export class ProfessorService {
     console.log(`[Get ALL Professors]${this.url}/professor`);
     return this.http.get(`${this.url}/professor`);
   }
+
+  addProfessor(req): Observable<any> {
+    return this.http.post(`${this.url}/professor/add`, req);
+  }
 }

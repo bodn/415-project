@@ -7,12 +7,17 @@ import { CourseStudentRemoveComponent } from './course-student-remove/course-stu
 import { SectionAddComponent } from './section-add/section-add.component';
 import { SectionCurveComponent } from './section-curve/section-curve.component';
 import { ProfessorSectionAddComponent } from './professor-section-add/professor-section-add.component';
+import { ProfessorAddComponent } from './professor-add/professor-add.component';
 
 
 const formsModule: Routes = [
   {
     path: 'forms/add/student',
     component: StudentAddComponent,
+  },
+  {
+    path: 'forms/add/professor',
+    component: ProfessorAddComponent,
   },
   {
     path: 'forms/add/section',
