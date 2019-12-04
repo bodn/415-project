@@ -152,7 +152,7 @@ group by se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name
 
 --18
 --when they click on the section record get all the student that took it
-select se.section_rec, sr.grade, s.first_name, s.last_name, s.student_id, s.email
+select se.section_rec, sr.grade, s.first_name, s.last_name, s.student_id, s.email, sr.status
 from section_records se
 join student_records sr on sr.section_rec = se.section_rec
 join student s on s.student_id = sr.student_id;
