@@ -856,7 +856,12 @@ BEGIN
     
     IF q is not null THEN 
 		update student_records set grade = new_grade where record_id = rec_id and student_id = s_id;
-	END IF;
+		if new_grade >= 50 then
+			update student_records set status = 'PASS' where record_id = rec_id and student_id = s_id;
+        else 
+			update student_records set status = 'PASS' where record_id = rec_id and student_id = s_id;
+        end if;
+    END IF;
     
 END$$
 DELIMITER ;
