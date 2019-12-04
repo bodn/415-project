@@ -74,6 +74,7 @@ course_names = ['COMP1050', 'COMP2080', 'COMP2260', 'CHEM3470', 'CHEM3801', 'CHE
 GPAs = []
 student_insert = []
 sec_dict = {}
+course_sec_dict = {}
 
 room_insert = [
 	"INSERT INTO ROOM VALUES (101, '1120', 'ERIE HALL', 110);",
@@ -165,6 +166,8 @@ def gen_section_records():
 	pos = 0
 	for i in range(0, len(course_names)):
 		year = str(rand_num_range(2010, 2019))
+		semester = semesters[rand_num_range(0, len(semesters) - 1)]
+
 		for j in range(0, 2):
 			output = 'insert into section_records values('
 			
@@ -172,16 +175,18 @@ def gen_section_records():
 			sec = section_numbers[pos]
 			output += '\'' + str(sec) + '\','
 			output += '\'' + course_names[i] + '\','
+			course_sec_dict[sec] = course_names[i]
 			output += str(prof_id[rand_num_range(0, len(prof_id) - 1)]) + ','
 			output += str(room_ids[rand_num_range(0, len(room_ids) - 1)]) + ','
 			output += year + ','
+			output += '\'' + semester + '\','
 			output += '\'' + week[rand_num_range(0, len(week) - 1)] + '\','
 			
 			time_slot = times[rand_num_range(0, len(times) - 1)].split('-')
 			output += '\'' + time_slot[0] + '\',' + '\'' + time_slot[1] + '\');'
 			section_records_insert.append(output)
 			pos += 1
-			sec_dict[sec] = year
+			sec_dict[sec] = str(semester) + str(year)
 		
 def gen_student_records():
 	
@@ -192,6 +197,8 @@ def gen_student_records():
 	for student in range(0, len(names)):
 		grade_total = 0
 		records = []
+		total = 0
+		c = []
 		for i in range(0, num_records):
 			output = 'insert into student_records values('
 			
@@ -199,24 +206,41 @@ def gen_student_records():
 			student_records_id_start += 1
 
 			output += str(student_numbers[student]) + ','
-			grade = rand_num(2)
-			grade_total += grade
 
 			section_rec = 0
 			while True:
 				section_rec = section_numbers[rand_num_range(0, len(section_numbers) - 1)]
-				if section_rec not in records:
+				if section_rec not in records and course_sec_dict[section_rec] not in c:
 					records.append(section_rec)
+					c.append(course_sec_dict[section_rec])
 					break;
 				records.append(section_rec)
+				c.append(course_sec_dict[section_rec])
 
-			output += str(section_rec) + ','
+
+			semester = sec_dict[section_rec][0]
+			year = sec_dict[section_rec][1:]
+
+			grade = 0
+			if not (year == '2019' and semester == 'F'):
+				grade = rand_num(2)
+				grade_total += grade
+				total += 1
+
+			output += '\'' + str(section_rec) + '\','
 			output += str(grade) + ','
-			output += '\'Pass\',' if grade >= 50 else '\'Fail\','
-			output += '\'' + sec_dict[section_rec] + '\','
-			output += '\'' + semesters[rand_num_range(0, len(semesters) - 1)] + '\');'
+
+			if year == '2019' and semester == 'F':
+				output += '\'IP\','
+			elif grade >= 50:
+				output += '\'PASS\','
+			elif grade < 50:
+				output += '\'FAIL\',' 
+
+			output += '\'' + year + '\','
+			output += '\'' + semester + '\');'
 			student_records_insert.append(output)
-		GPAs.append(round((grade_total / num_records), 2))
+		GPAs.append(round((grade_total / total), 2))
 	return
 
 def prepare_for_inserts():
