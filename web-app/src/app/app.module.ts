@@ -8,6 +8,7 @@ import { StudentModule } from './student/student.module';
 import { HomeDashboardModule } from './home-dashboard/home-dashboard.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseModule } from './course/course.module';
+import { AppFormsModule } from './forms/forms.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CourseModule } from './course/course.module';
     BrowserAnimationsModule,
     HomeDashboardModule,
     StudentModule,
-    CourseModule
+    CourseModule,
+    AppFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

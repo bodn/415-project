@@ -35,3 +35,16 @@ exports.getStudentCourses = async (id, callback) => {
     }
   );
 };
+
+exports.addStudent= async (req, callback) => {
+  const connection = db.get();
+  console.log(req)
+  connection.query(
+    `CALL addStudent(?, ?, ?)`,
+    [req.first, req.last, req.major],
+    (err, rows, fields) => {
+      if (err) callback(err);
+      else callback(rows);
+    }
+  );
+}

@@ -42,3 +42,11 @@
     cursor: pointer;
   }
 }
+
+.clickable {
+  &:hover{
+    cursor: pointer;
+    opacity: 0.85;
+    transition-duration: 0.33s;
+  }
+}
