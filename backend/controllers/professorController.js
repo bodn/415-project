@@ -28,7 +28,7 @@ exports.addProfessor= async (req, callback) => {
   console.log(req);
   connection.query(
     `CALL add_professor(?, ?, ?)`,
-    [req.first, req.last, req.major],
+    [req.first.toUpperCase(), req.last.toUpperCase(), req.major],
     (err, rows, fields) => {
       if (err) callback(err);
       else callback(rows);

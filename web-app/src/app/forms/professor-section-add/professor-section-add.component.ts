@@ -25,7 +25,7 @@ export class ProfessorSectionAddComponent implements OnInit {
     private professorService: ProfessorService,
     private router: Router,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.courseService.getAllCourses().subscribe(resp => {
@@ -46,7 +46,15 @@ export class ProfessorSectionAddComponent implements OnInit {
     });
 
     this.professorService.getAllProfessors().subscribe(resp => {
-      this.professorList$.next(resp.data);
+      this.professorList$.next(
+        resp.data.sort((a, b) => {
+          if (a.last_name < b.last_name) {
+            return -1;
+          } else {
+            return 1;
+          }
+        })
+      );
     })
 
     this.secondFormGroup = this._formBuilder.group({

@@ -57,7 +57,15 @@ export class SectionAddComponent implements OnInit {
       this.courseList$.next(resp.data);
     });
     this.professorService.getAllProfessors().subscribe(resp => {
-      this.professorList$.next(resp.data);
+      this.professorList$.next(
+        resp.data.sort((a, b) => {
+          if (a.last_name < b.last_name) {
+            return -1;
+          } else {
+            return 1;
+          }
+        })
+      );
     });
     this.roomService.getAllRooms().subscribe(resp => {
       console.log(resp.data);
@@ -71,6 +79,7 @@ export class SectionAddComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       selectProfessor: ['', Validators.required]
     });
+
 
     this.thirdFormGroup = this._formBuilder.group({
       selectRoom: ['', Validators.required],
@@ -99,7 +108,7 @@ export class SectionAddComponent implements OnInit {
       .subscribe(resp => {
         console.log(resp)
         if (resp) {
-          this.openSnackBar('Sucess! The section has been added', 'Close');
+          this.openSnackBar('Success! The section has been added', 'Close');
         }
       });
   }
