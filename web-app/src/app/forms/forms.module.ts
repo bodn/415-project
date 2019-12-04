@@ -5,9 +5,10 @@ import { FormsRoutingModule } from './forms-routing.module';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatSnackBarModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { StudentCourseAddComponent } from './student-course-add/student-course-add.component';
 
 @NgModule({
-  declarations: [StudentAddComponent],
+  declarations: [StudentAddComponent, StudentCourseAddComponent],
   imports: [
     FormsRoutingModule,
     CommonModule,
