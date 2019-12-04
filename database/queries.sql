@@ -342,7 +342,7 @@ set @num = 0;
 call get_average('3000', @total, @num, @avg1);
 select @avg1;
 
--- 25
+-- 25 
 -- Query to get how many students each professor has taught
 select p.professor_id, p.first_name, p.last_name, count(sr.student_id) from professor p
 join section_records se on se.professor_id = p.professor_id
