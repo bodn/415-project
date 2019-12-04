@@ -144,11 +144,13 @@ end;
 --16
 -- query for specific course id to get each section 
 -- for when it was offered and how many students
-select se.section_rec, c.course_id "Course ID", c.course_name "Course Name", se.section_id, p.first_name "Professor", se.year, count(sr.record_id) 'Number of Students' from course c
-join section_records se on se.course_id = c.course_id
-join student_records sr on sr.section_rec = se.section_rec
-join professor p on p.professor_id = se.professor_id
-group by se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name,se.year;
+select se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name, p.professor_id, se.semester ,se.year, count(sr.record_id) 'num_students' from course c
+    join section_records se on se.course_id = c.course_id
+    left join student_records sr on sr.section_rec = se.section_rec
+    join professor p on p.professor_id = se.professor_id
+    WHERE c.course_id = 'COMP2080'
+    group by se.section_rec, c.course_id, c.course_name, se.section_id, p.first_name,se.year;
+
 
 --18
 --when they click on the section record get all the student that took it
