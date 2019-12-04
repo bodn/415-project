@@ -124,19 +124,24 @@ DELIMITER ;
 -- Procedure to change a students grade in a section
 DELIMITER $$
 CREATE PROCEDURE change_grade(
-	IN s_id integer,
+    IN s_id integer,
     IN rec_id integer,
     IN new_grade integer
 )
 BEGIN
-	
+    
     declare q integer;
     
     set q = (select grade from student_records where record_id = rec_id and student_id = s_id);
     
     IF q is not null THEN 
-		update student_records set grade = new_grade where record_id = rec_id and student_id = s_id;
-	END IF;
+        update student_records set grade = new_grade where record_id = rec_id and student_id = s_id;
+        if new_grade >= 50 then
+            update student_records set status = 'PASS' where record_id = rec_id and student_id = s_id;
+        else 
+            update student_records set status = 'PASS' where record_id = rec_id and student_id = s_id;
+        end if;
+    END IF;
     
 END$$
 DELIMITER ;
