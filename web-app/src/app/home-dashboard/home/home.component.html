@@ -21,7 +21,7 @@
       <h3 class="font-weight-lighter">Student management</h3>
       <div class="border-top pt-4 px-4 row">
         <!-- Create a student -->
-        <div [routerLink]="['/forms/add/student']" class="col-sm-4 m-2 clickable card shadow">
+        <div [routerLink]="['/forms/add/student']" class="col-sm-3 m-2 clickable card shadow">
           <div class="card-body">
             <h5 class="card-title">Create a New Student</h5>
             <h6 class="card-subtitle mb-2 text-muted">Student Management</h6>
@@ -29,13 +29,22 @@
             <a href="#" class="card-link">Create</a>
           </div>
         </div>
-         <!-- Add a student to a course -->
-         <div [routerLink]="['/forms/add/student-to-course']" class="col-sm-4 m-2 clickable card shadow">
+        <!-- Add a student to a course -->
+        <div [routerLink]="['/forms/add/student-to-course']" class="col-sm-3 m-2 clickable card shadow">
           <div class="card-body">
             <h5 class="card-title">Add Student to a Course</h5>
             <h6 class="card-subtitle mb-2 text-muted">Student Management</h6>
             <p class="card-text">Add a course to an existing student's record</p>
-            <a href="#" class="card-link">Add course</a>
+            <a href="#" class="card-link">Add Course</a>
+          </div>
+        </div>
+        <!-- Update a Students grade in a course -->
+        <div [routerLink]="['/forms/update/student-grade']" class="col-sm-3 m-2 clickable card shadow">
+          <div class="card-body">
+            <h5 class="card-title">Update a Student's Grade</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Student Management</h6>
+            <p class="card-text">Change the grade a student has in a specific course</p>
+            <a href="#" class="card-link">Update Grade</a>
           </div>
         </div>
       </div>

@@ -114,5 +114,28 @@ router.post("/add-to-course", function(req, res) {
     })
 });
 
+// Add student to COURSE
+router.post("/update-grade", function(req, res) {
+  const promise = new Promise((resolve, reject) => {
+      student.updateGrade(req.body, res => {
+        if (res) {
+          resolve(res);
+        } else {
+          reject("ERROR ON QUERY");
+        }
+      });
+    });
+    promise.catch(err => {
+        console.error('FUCK')
+    })
+    promise.then(val => {
+        res.status(200).json({
+          info: "Success!",
+          total: val.length,
+          data: val
+        });
+    })
+});
+
 
 module.exports = router;

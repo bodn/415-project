@@ -28,4 +28,8 @@ export class StudentService {
   addCourse(req): Observable<any> {
     return this.http.post(`${this.url}/student/add-to-course`, req);
   }
+
+  updateGrade(req): Observable<any> {
+    return this.http.post(`${this.url}/student/update-grade`, req);
+  }
 }
