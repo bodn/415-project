@@ -324,7 +324,7 @@ CREATE PROCEDURE create_section(
     IN start1 varchar(20),
     IN end1 varchar(20)
 )
-label:BEGIN
+BEGIN
     
     declare sec_id int(2);
     declare sec_rec char(4);
