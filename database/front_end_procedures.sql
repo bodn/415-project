@@ -312,3 +312,33 @@ label:BEGIN
 END$$
 DELIMITER ;
 
+drop procedure if exists create_section;
+
+-- Procedure to add a section
+DELIMITER $$
+CREATE PROCEDURE create_section(
+    IN course_id varchar(8),
+    IN prof_id int(4),
+    IN room_id int(3),
+    IN day1 varchar(30),
+    IN start1 varchar(20),
+    IN end1 varchar(20)
+)
+label:BEGIN
+    
+    declare sec_id int(2);
+    declare sec_rec char(4);
+    
+    set sec_id = (select section_id from section_records sr where sr.course_id = course_id and sr.year = 2019 and sr.semester = 'F' order by section_id desc limit 1);
+    set sec_rec = (select section_rec from section_records sr order by section_rec desc limit 1) + 1;
+    
+    if sec_id is null then
+        set sec_id = 1;
+    else
+        set sec_id = sec_id + 1;
+    end if;
+    
+    insert into section_records values(sec_id, sec_rec, course_id, prof_id, room_id, 2019, 'F', day1, start1, end1);
+    
+END$$
+DELIMITER ;
